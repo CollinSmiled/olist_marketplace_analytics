@@ -1,0 +1,31 @@
+# Environment variables and credentials
+.env
+
+# Raw and processed datasets
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Logs
+logs/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# dbt generated files
+dbt/target/
+dbt/logs/
+dbt_packages/
+
+# IDE and operating system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
