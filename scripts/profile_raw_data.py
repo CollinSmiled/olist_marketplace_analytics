@@ -17,12 +17,74 @@ EXPECTED_CSV_FILES = {
     "product_category_name_translation.csv",
 }
 
+IDENTIFIERS_TO_PROFILE = {
+    "olist_customers_dataset.csv": [
+        ("customer_id",),
+        ("customer_unique_id",),
+    ],
+    "olist_geolocation_dataset.csv": [
+        ("geolocation_zip_code_prefix",),
+    ],
+    "olist_order_items_dataset.csv": [
+        ("order_id",),
+        ("order_id", "order_item_id"),
+    ],
+    "olist_order_payments_dataset.csv": [
+        ("order_id",),
+        ("order_id", "payment_sequential"),
+    ],
+    "olist_order_reviews_dataset.csv": [
+        ("review_id",),
+        ("order_id",),
+        ("review_id", "order_id"),
+    ],
+    "olist_orders_dataset.csv": [
+        ("order_id",),
+        ("customer_id",),
+    ],
+    "olist_products_dataset.csv": [
+        ("product_id",),
+    ],
+    "olist_sellers_dataset.csv": [
+        ("seller_id",),
+    ],
+    "product_category_name_translation.csv": [
+        ("product_category_name",),
+    ],
+}
+
+
+def print_identifier_profiles(
+    df: pd.DataFrame,
+    file_name: str,
+) -> None:
+    print("\nIdentifier profiles:")
+
+    for key_columns in IDENTIFIERS_TO_PROFILE[file_name]:
+        column_list = list(key_columns)
+
+        distinct_count = int(df[column_list].drop_duplicates().shape[0])
+        duplicate_count = int(df.duplicated(subset=column_list).sum())
+        null_count = int(df[column_list].isna().any(axis=1).sum())
+
+        is_unique = duplicate_count == 0 and null_count == 0
+        uniqueness_status = "unique" if is_unique else "not unique"
+        identifier_name = " + ".join(key_columns)
+
+        print(
+            f"{identifier_name}: "
+            f"\n{distinct_count:,} distinct, "
+            f"\n{duplicate_count:,} duplicate rows after first, "
+            f"\n{null_count:,} rows containing nulls, "
+            f"\n{uniqueness_status}\n"
+        )
+
 
 def main() -> None:
     csv_files = sorted(RAW_DATA_DIR.glob("*.csv"))
 
     if not csv_files:
-        raise FileNotFoundError(f"No CSV Files found in {RAW_DATA_DIR}")
+        raise FileNotFoundError(f"No CSV files found in {RAW_DATA_DIR}")
 
     actual_csv_files = {csv_file.name for csv_file in csv_files}
 
@@ -70,6 +132,8 @@ def main() -> None:
                     f"{missing_count:,} "
                     f"({missing_percentage:.2f}%)"
                 )
+
+        print_identifier_profiles(df, csv_file.name)
 
         print()
 
