@@ -177,6 +177,93 @@ ORDER_TIMESTAMP_COLUMNS = [
     "order_estimated_delivery_date",
 ]
 
+NUMERIC_RANGE_CHECKS = [
+    (
+        "reviews.review_score",
+        "olist_order_reviews_dataset.csv",
+        "review_score",
+        1,
+        5,
+    ),
+    (
+        "order_items.price",
+        "olist_order_items_dataset.csv",
+        "price",
+        0,
+        None,
+    ),
+    (
+        "order_items.freight_value",
+        "olist_order_items_dataset.csv",
+        "freight_value",
+        0,
+        None,
+    ),
+    (
+        "payments.payment_value",
+        "olist_order_payments_dataset.csv",
+        "payment_value",
+        0,
+        None,
+    ),
+    (
+        "payments.payment_installments",
+        "olist_order_payments_dataset.csv",
+        "payment_installments",
+        0,
+        None,
+    ),
+    (
+        "products.product_photos_qty",
+        "olist_products_dataset.csv",
+        "product_photos_qty",
+        0,
+        None,
+    ),
+    (
+        "products.product_weight_g",
+        "olist_products_dataset.csv",
+        "product_weight_g",
+        0,
+        None,
+    ),
+    (
+        "products.product_length_cm",
+        "olist_products_dataset.csv",
+        "product_length_cm",
+        0,
+        None,
+    ),
+    (
+        "products.product_height_cm",
+        "olist_products_dataset.csv",
+        "product_height_cm",
+        0,
+        None,
+    ),
+    (
+        "products.product_width_cm",
+        "olist_products_dataset.csv",
+        "product_width_cm",
+        0,
+        None,
+    ),
+    (
+        "geolocation.latitude",
+        "olist_geolocation_dataset.csv",
+        "geolocation_lat",
+        -90,
+        90,
+    ),
+    (
+        "geolocation.longitude",
+        "olist_geolocation_dataset.csv",
+        "geolocation_lng",
+        -180,
+        180,
+    ),
+]
+
 def print_identifier_profiles(
     df: pd.DataFrame,
     file_name: str,
@@ -476,6 +563,66 @@ def print_order_business_rule_profiles() -> None:
         anomaly_details[detail_columns].to_string(index=False)
     )
 
+def print_numeric_range_profiles() -> None:
+    print("\nNumeric range profiles:")
+
+    for (
+        check_name,
+        file_name,
+        column_name,
+        minimum,
+        maximum,
+    ) in NUMERIC_RANGE_CHECKS:
+        raw_values = load_column(file_name, column_name)
+
+        numeric_values = pd.to_numeric(
+            raw_values,
+            errors="coerce",
+        )
+
+        null_count = int(raw_values.isna().sum())
+        parse_failure_count = int(
+            (
+                raw_values.notna()
+                & numeric_values.isna()
+            ).sum()
+        )
+
+        below_minimum_count = (
+            int((numeric_values < minimum).sum())
+            if minimum is not None
+            else 0
+        )
+        above_maximum_count = (
+            int((numeric_values > maximum).sum())
+            if maximum is not None
+            else 0
+        )
+        zero_count = int((numeric_values == 0).sum())
+
+        print(
+            f"- {check_name}: "
+            f"{below_minimum_count:,} below minimum, "
+            f"{above_maximum_count:,} above maximum, "
+            f"{parse_failure_count:,} parse failures, "
+            f"{null_count:,} nulls, "
+            f"{zero_count:,} zeros"
+        )
+
+
+def print_payment_type_profiles() -> None:
+    payment_types = load_column(
+        "olist_order_payments_dataset.csv",
+        "payment_type",
+    )
+
+    print("\nPayment-type profiles:")
+
+    for payment_type, count in payment_types.value_counts(
+        dropna=False
+    ).items():
+        print(f"- {payment_type}: {count:,}")
+
 def main() -> None:
     csv_files = sorted(RAW_DATA_DIR.glob("*.csv"))
 
@@ -537,6 +684,8 @@ def main() -> None:
     print_coverage_profiles()
     print_missing_order_component_statuses()
     print_order_business_rule_profiles()
+    print_numeric_range_profiles()
+    print_payment_type_profiles()
 
 if __name__ == "__main__":
     main()
