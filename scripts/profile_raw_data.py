@@ -105,6 +105,44 @@ RELATIONSHIPS_TO_PROFILE = [
     ),
 ]
 
+COVERAGE_CHECKS = [
+    (
+        "orders without order items",
+        "olist_orders_dataset.csv",
+        "order_id",
+        "olist_order_items_dataset.csv",
+        "order_id",
+    ),
+    (
+        "orders without payments",
+        "olist_orders_dataset.csv",
+        "order_id",
+        "olist_order_payments_dataset.csv",
+        "order_id",
+    ),
+    (
+        "orders without reviews",
+        "olist_orders_dataset.csv",
+        "order_id",
+        "olist_order_reviews_dataset.csv",
+        "order_id",
+    ),
+    (
+        "customers without geolocation coverage",
+        "olist_customers_dataset.csv",
+        "customer_zip_code_prefix",
+        "olist_geolocation_dataset.csv",
+        "geolocation_zip_code_prefix",
+    ),
+    (
+        "sellers without geolocation coverage",
+        "olist_sellers_dataset.csv",
+        "seller_zip_code_prefix",
+        "olist_geolocation_dataset.csv",
+        "geolocation_zip_code_prefix",
+    ),
+]
+
 def print_identifier_profiles(
     df: pd.DataFrame,
     file_name: str,
@@ -179,6 +217,52 @@ def print_relationship_profiles() -> None:
             f"{status}"
         )
 
+def print_coverage_profiles() -> None:
+    print("\nReverse coverage profiles:")
+
+    for (
+        check_name,
+        base_file,
+        base_column,
+        reference_file,
+        reference_column,
+    ) in COVERAGE_CHECKS:
+        base_values = load_column(base_file, base_column)
+        reference_values = load_column(
+            reference_file,
+            reference_column,
+        )
+
+        null_base_count = int(base_values.isna().sum())
+        non_null_base_values = base_values.dropna()
+
+        reference_value_set = reference_values.dropna().unique()
+        uncovered_mask = ~non_null_base_values.isin(
+            reference_value_set
+        )
+        uncovered_values = non_null_base_values[uncovered_mask]
+
+        uncovered_row_count = int(len(uncovered_values))
+        uncovered_distinct_count = int(
+            uncovered_values.nunique()
+        )
+
+        base_row_count = int(len(non_null_base_values))
+
+        uncovered_percentage = (
+            uncovered_row_count / base_row_count * 100
+            if base_row_count > 0
+            else 0.0
+        )
+
+        print(
+            f"- {check_name}: "
+            f"{uncovered_row_count:,} affected rows, "
+            f"{uncovered_distinct_count:,} distinct values, "
+            f"{null_base_count:,} null base values, "
+            f"{uncovered_percentage:.3f}% uncovered"
+        )
+
 def main() -> None:
     csv_files = sorted(RAW_DATA_DIR.glob("*.csv"))
 
@@ -237,7 +321,7 @@ def main() -> None:
         print()
 
     print_relationship_profiles()
-
+    print_coverage_profiles()
 
 if __name__ == "__main__":
     main()
