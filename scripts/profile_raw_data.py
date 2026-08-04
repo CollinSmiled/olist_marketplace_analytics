@@ -158,6 +158,25 @@ ORDER_COMPONENTS_TO_PROFILE = [
     ),
 ]
 
+EXPECTED_ORDER_STATUSES = {
+    "approved",
+    "canceled",
+    "created",
+    "delivered",
+    "invoiced",
+    "processing",
+    "shipped",
+    "unavailable",
+}
+
+ORDER_TIMESTAMP_COLUMNS = [
+    "order_purchase_timestamp",
+    "order_approved_at",
+    "order_delivered_carrier_date",
+    "order_delivered_customer_date",
+    "order_estimated_delivery_date",
+]
+
 def print_identifier_profiles(
     df: pd.DataFrame,
     file_name: str,
@@ -321,6 +340,142 @@ def print_missing_order_component_statuses() -> None:
                 f"({status_percentage:.2f}%)"
             )
 
+def print_order_business_rule_profiles() -> None:
+    orders = pd.read_csv(
+        RAW_DATA_DIR / "olist_orders_dataset.csv",
+        parse_dates=ORDER_TIMESTAMP_COLUMNS,
+    )
+
+    print("\nOrder business-rule profiles:")
+
+    actual_statuses = set(orders["order_status"].dropna().unique())
+    unexpected_statuses = sorted(
+        actual_statuses - EXPECTED_ORDER_STATUSES
+    )
+
+    print(
+        "- unexpected order statuses: "
+        f"{unexpected_statuses or 'none'}"
+    )
+
+    timestamp_checks = {
+        "approval before purchase": (
+            orders["order_approved_at"].notna()
+            & (
+                orders["order_approved_at"]
+                < orders["order_purchase_timestamp"]
+            )
+        ),
+        "carrier handoff before purchase": (
+            orders["order_delivered_carrier_date"].notna()
+            & (
+                orders["order_delivered_carrier_date"]
+                < orders["order_purchase_timestamp"]
+            )
+        ),
+        "customer delivery before purchase": (
+            orders["order_delivered_customer_date"].notna()
+            & (
+                orders["order_delivered_customer_date"]
+                < orders["order_purchase_timestamp"]
+            )
+        ),
+        "estimated delivery before purchase": (
+            orders["order_estimated_delivery_date"].notna()
+            & (
+                orders["order_estimated_delivery_date"]
+                < orders["order_purchase_timestamp"]
+            )
+        ),
+        "customer delivery before carrier handoff": (
+            orders["order_delivered_customer_date"].notna()
+            & orders["order_delivered_carrier_date"].notna()
+            & (
+                orders["order_delivered_customer_date"]
+                < orders["order_delivered_carrier_date"]
+            )
+        ),
+    }
+
+    for check_name, violation_mask in timestamp_checks.items():
+        violation_count = int(violation_mask.sum())
+
+        print(
+            f"- {check_name}: "
+            f"{violation_count:,} violations"
+        )
+
+    delivered_mask = orders["order_status"].eq("delivered")
+    has_delivery_timestamp = orders[
+        "order_delivered_customer_date"
+    ].notna()
+
+    delivered_without_timestamp = int(
+        (delivered_mask & ~has_delivery_timestamp).sum()
+    )
+    non_delivered_with_timestamp = int(
+        (~delivered_mask & has_delivery_timestamp).sum()
+    )
+
+    print(
+        "- delivered orders without customer-delivery timestamp: "
+        f"{delivered_without_timestamp:,}"
+    )
+    print(
+        "- non-delivered orders with customer-delivery timestamp: "
+        f"{non_delivered_with_timestamp:,}"
+    )
+
+    payment_order_ids = load_column(
+        "olist_order_payments_dataset.csv",
+        "order_id",
+    ).dropna().unique()
+
+    orders_without_payment = orders[
+        ~orders["order_id"].isin(payment_order_ids)
+    ]
+
+    order_items = pd.read_csv(
+        RAW_DATA_DIR / "olist_order_items_dataset.csv",
+        usecols=["order_id", "price", "freight_value"],
+    )
+
+    item_summary = (
+        order_items[
+            order_items["order_id"].isin(
+                orders_without_payment["order_id"]
+            )
+        ]
+        .groupby("order_id")
+        .agg(
+            item_count=("order_id", "size"),
+            item_value=("price", "sum"),
+            freight_value=("freight_value", "sum"),
+        )
+        .reset_index()
+    )
+
+    anomaly_details = orders_without_payment.merge(
+        item_summary,
+        on="order_id",
+        how="left",
+    )
+
+    detail_columns = [
+        "order_id",
+        "order_status",
+        "order_purchase_timestamp",
+        "order_delivered_customer_date",
+        "item_count",
+        "item_value",
+        "freight_value",
+    ]
+
+    print("\nOrders without payment details:")
+    print(
+        anomaly_details[detail_columns].to_string(index=False)
+    )
+
 def main() -> None:
     csv_files = sorted(RAW_DATA_DIR.glob("*.csv"))
 
@@ -381,6 +536,7 @@ def main() -> None:
     print_relationship_profiles()
     print_coverage_profiles()
     print_missing_order_component_statuses()
+    print_order_business_rule_profiles()
 
 if __name__ == "__main__":
     main()
