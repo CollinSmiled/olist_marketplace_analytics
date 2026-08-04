@@ -53,6 +53,57 @@ IDENTIFIERS_TO_PROFILE = {
     ],
 }
 
+RELATIONSHIPS_TO_PROFILE = [
+    (
+        "orders.customer_id -> customers.customer_id",
+        "olist_orders_dataset.csv",
+        "customer_id",
+        "olist_customers_dataset.csv",
+        "customer_id",
+    ),
+    (
+        "order_items.order_id -> orders.order_id",
+        "olist_order_items_dataset.csv",
+        "order_id",
+        "olist_orders_dataset.csv",
+        "order_id",
+    ),
+    (
+        "order_items.product_id -> products.product_id",
+        "olist_order_items_dataset.csv",
+        "product_id",
+        "olist_products_dataset.csv",
+        "product_id",
+    ),
+    (
+        "order_items.seller_id -> sellers.seller_id",
+        "olist_order_items_dataset.csv",
+        "seller_id",
+        "olist_sellers_dataset.csv",
+        "seller_id",
+    ),
+    (
+        "order_payments.order_id -> orders.order_id",
+        "olist_order_payments_dataset.csv",
+        "order_id",
+        "olist_orders_dataset.csv",
+        "order_id",
+    ),
+    (
+        "order_reviews.order_id -> orders.order_id",
+        "olist_order_reviews_dataset.csv",
+        "order_id",
+        "olist_orders_dataset.csv",
+        "order_id",
+    ),
+    (
+        "products.category -> category_translation.category",
+        "olist_products_dataset.csv",
+        "product_category_name",
+        "product_category_name_translation.csv",
+        "product_category_name",
+    ),
+]
 
 def print_identifier_profiles(
     df: pd.DataFrame,
@@ -79,6 +130,54 @@ def print_identifier_profiles(
             f"\n{uniqueness_status}\n"
         )
 
+def load_column(
+    file_name: str,
+    column_name: str,
+) -> pd.Series:
+    file_path = RAW_DATA_DIR / file_name
+
+    return pd.read_csv(
+        file_path,
+        usecols=[column_name],
+    )[column_name]
+
+
+def print_relationship_profiles() -> None:
+    print("\nForeign-key relationship profiles:")
+
+    for (
+        relationship_name,
+        child_file,
+        child_column,
+        parent_file,
+        parent_column,
+    ) in RELATIONSHIPS_TO_PROFILE:
+        child_values = load_column(child_file, child_column)
+        parent_values = load_column(parent_file, parent_column)
+
+        null_child_count = int(child_values.isna().sum())
+        non_null_child_values = child_values.dropna()
+
+        parent_value_set = parent_values.dropna().unique()
+        orphan_mask = ~non_null_child_values.isin(parent_value_set)
+        orphan_values = non_null_child_values[orphan_mask]
+
+        orphan_row_count = int(len(orphan_values))
+        orphan_distinct_count = int(orphan_values.nunique())
+
+        status = (
+            "valid"
+            if orphan_row_count == 0
+            else "orphaned values found"
+        )
+
+        print(
+            f"- {relationship_name}: "
+            f"{orphan_row_count:,} orphan rows, "
+            f"{orphan_distinct_count:,} distinct orphan values, "
+            f"{null_child_count:,} null child values, "
+            f"{status}"
+        )
 
 def main() -> None:
     csv_files = sorted(RAW_DATA_DIR.glob("*.csv"))
@@ -136,6 +235,8 @@ def main() -> None:
         print_identifier_profiles(df, csv_file.name)
 
         print()
+
+    print_relationship_profiles()
 
 
 if __name__ == "__main__":
