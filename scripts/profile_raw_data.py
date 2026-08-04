@@ -143,6 +143,21 @@ COVERAGE_CHECKS = [
     ),
 ]
 
+ORDER_COMPONENTS_TO_PROFILE = [
+    (
+        "order items",
+        "olist_order_items_dataset.csv",
+    ),
+    (
+        "payments",
+        "olist_order_payments_dataset.csv",
+    ),
+    (
+        "reviews",
+        "olist_order_reviews_dataset.csv",
+    ),
+]
+
 def print_identifier_profiles(
     df: pd.DataFrame,
     file_name: str,
@@ -263,6 +278,49 @@ def print_coverage_profiles() -> None:
             f"{uncovered_percentage:.3f}% uncovered"
         )
 
+def print_missing_order_component_statuses() -> None:
+    orders = pd.read_csv(
+        RAW_DATA_DIR / "olist_orders_dataset.csv",
+        usecols=["order_id", "order_status"],
+    )
+
+    print("\nMissing order components by order status:")
+
+    for component_name, component_file in ORDER_COMPONENTS_TO_PROFILE:
+        covered_order_ids = load_column(
+            component_file,
+            "order_id",
+        ).dropna().unique()
+
+        missing_orders = orders[
+            ~orders["order_id"].isin(covered_order_ids)
+        ]
+
+        missing_order_count = int(len(missing_orders))
+
+        print(
+            f"\nOrders without {component_name}: "
+            f"{missing_order_count:,}"
+        )
+
+        if missing_orders.empty:
+            continue
+
+        status_counts = missing_orders[
+            "order_status"
+        ].value_counts(dropna=False)
+
+        for order_status, status_count in status_counts.items():
+            status_percentage = (
+                status_count / missing_order_count * 100
+            )
+
+            print(
+                f"- {order_status}: "
+                f"{status_count:,} "
+                f"({status_percentage:.2f}%)"
+            )
+
 def main() -> None:
     csv_files = sorted(RAW_DATA_DIR.glob("*.csv"))
 
@@ -322,6 +380,7 @@ def main() -> None:
 
     print_relationship_profiles()
     print_coverage_profiles()
+    print_missing_order_component_statuses()
 
 if __name__ == "__main__":
     main()
