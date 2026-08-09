@@ -10,8 +10,9 @@ The project investigates why orders are delayed, which sellers are underperformi
 
 ## Current Status
 
-Milestone 1: dataset understanding and data profiling is in progress.
-Milestone 2: source profiling and PostgreSQL raw ingestion completed.
+- Milestone 1: dataset understanding and source profiling
+- Milestone 2: PostgreSQL raw ingestion
+- Milestone 3: Dockerized PostgreSQL and ingestion
 
 ## Planned Technology Stack
 
@@ -24,24 +25,32 @@ Milestone 2: source profiling and PostgreSQL raw ingestion completed.
 
 ## Running Raw Ingestion
 
-1. Place the nine Olist CSV files in `data/raw/`.
-2. Create and activate a Python 3.12 virtual environment.
-3. Install the dependencies:
+### Prerequisites
 
-   ```powershell
-   python -m pip install -r requirements.txt
-   ```
+- Docker Desktop
+- The nine Olist CSV files placed in `data/raw/`
 
-4. Copy `.env.example` to `.env` and add your local PostgreSQL credentials:
+### Setup
 
-   ```powershell
-   Copy-Item .env.example .env
-   ```
+Copy the environment template and add your PostgreSQL password:
 
-5. Run the ingestion pipeline:
+Copy-Item .env.example .env
 
-   ```powershell
-   python -m ingestion.load_raw_data
-   ```
 
-The pipeline validates the source files and loads them into the PostgreSQL `raw` schema. Each run performs a transactional full refresh and verifies the loaded row counts.
+Build the ingestion image:
+
+docker compose build ingestion
+
+
+Start PostgreSQL:
+
+docker compose up -d postgres
+
+
+Load the raw CSV files:
+
+docker compose run --rm ingestion
+
+
+The ingestion pipeline validates the source files, performs a transactional full refresh, and verifies the loaded row counts.
+

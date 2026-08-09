@@ -1,0 +1,14 @@
+.git/
+.venv/
+venv/
+.env
+data/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+docs/
+scripts/
+logs/
+dbt/target/
+dbt/logs/
+dbt_packages/
