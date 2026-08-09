@@ -24,6 +24,27 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
+  ingestion:
+    image: olist-ingestion:dev
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      RAW_DATA_PATH: /app/data/raw
+
+    volumes:
+      - ./data/raw:/app/data/raw:ro
 
 volumes:
   postgres_data:
