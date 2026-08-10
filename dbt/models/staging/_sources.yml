@@ -1,0 +1,84 @@
+version: 2
+
+sources:
+  - name: raw
+    description: Raw Olist tables loaded from the source CSV files.
+    schema: raw
+
+    tables:
+      - name: customers
+        description: Customer and customer-identity records.
+        columns:
+          - name: customer_id
+            data_tests:
+              - not_null
+              - unique
+
+      - name: geolocation
+        description: Geographic coordinates by ZIP-code prefix.
+        columns:
+          - name: geolocation_zip_code_prefix
+            data_tests:
+              - not_null
+
+      - name: order_items
+        description: Individual products and sellers within each order.
+        columns:
+          - name: order_id
+            data_tests:
+              - not_null
+          - name: order_item_id
+            data_tests:
+              - not_null
+
+      - name: order_payments
+        description: Payment components associated with orders.
+        columns:
+          - name: order_id
+            data_tests:
+              - not_null
+          - name: payment_sequential
+            data_tests:
+              - not_null
+
+      - name: order_reviews
+        description: Customer review records at review ID and order ID grain.
+        columns:
+          - name: review_id
+            data_tests:
+              - not_null
+          - name: order_id
+            data_tests:
+              - not_null
+
+      - name: orders
+        description: Order status and lifecycle timestamps.
+        columns:
+          - name: order_id
+            data_tests:
+              - not_null
+              - unique
+
+      - name: products
+        description: Product categories and physical attributes.
+        columns:
+          - name: product_id
+            data_tests:
+              - not_null
+              - unique
+
+      - name: sellers
+        description: Seller locations by ZIP-code prefix.
+        columns:
+          - name: seller_id
+            data_tests:
+              - not_null
+              - unique
+
+      - name: product_category_translation
+        description: Portuguese-to-English product category mapping.
+        columns:
+          - name: product_category_name
+            data_tests:
+              - not_null
+              - unique
