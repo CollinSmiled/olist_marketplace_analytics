@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: stg_orders
+    description: Cleaned and typed order records at one row per order.
+
+    columns:
+      - name: order_id
+        description: Unique identifier for an order.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: Customer record associated with the order.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: source('raw', 'customers')
+                field: customer_id
+
+      - name: order_status
+        description: Current lifecycle status of the order.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - approved
+                  - canceled
+                  - created
+                  - delivered
+                  - invoiced
+                  - processing
+                  - shipped
+                  - unavailable
+
+      - name: order_purchase_at
+        description: Timestamp when the order was placed.
+        data_tests:
+          - not_null
+
+      - name: order_approved_at
+        description: Timestamp when payment approval occurred.
+
+      - name: order_delivered_carrier_at
+        description: Timestamp when the order was handed to the carrier.
+
+      - name: order_delivered_customer_at
+        description: Timestamp when the customer received the order.
+
+      - name: order_estimated_delivery_at
+        description: Estimated customer-delivery timestamp.
+        data_tests:
+          - not_null
