@@ -17,7 +17,7 @@ models:
           - not_null
           - relationships:
               arguments:
-                to: source('raw', 'customers')
+                to: ref('stg_customers')
                 field: customer_id
 
       - name: order_status
@@ -54,3 +54,59 @@ models:
         description: Estimated customer-delivery timestamp.
         data_tests:
           - not_null
+
+  - name: stg_customers
+    description: Cleaned customer records at one row per customer ID.
+
+    columns:
+      - name: customer_id
+        description: Order-specific customer identifier.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: customer_unique_id
+        description: Identifier for customer across orders.
+        data_tests:
+          - not_null
+
+      - name: customer_zip_code_prefix
+        description: Five-character ZIP-code prefix for the customer.
+        data_tests:
+          - not_null
+
+      - name: customer_city
+        description: Customer city normalized to lowercase.
+        data_tests:
+          - not_null
+
+      - name: customer_state
+        description: Two-character Brazilian state code.
+        data_tests:
+          - not_null
+
+  - name: stg_sellers
+    description: Cleaned seller records at one row per seller ID.
+
+    columns:
+      - name: seller_id
+        description: Unique identifier for a seller.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: seller_zip_code_prefix
+        description: Five-character ZIP-code prefix for the seller.
+        data_tests:
+          - not_null
+
+      - name: seller_city
+        description: Seller city normalized to lowercase.
+        data_tests:
+          - not_null
+
+      - name: seller_state
+        description: Two-character Brazilian state code.
+        data_tests:
+          - not_null
+          
