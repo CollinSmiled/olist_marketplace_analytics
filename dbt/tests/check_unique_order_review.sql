@@ -2,7 +2,7 @@ SELECT
     review_id,
     order_id,
     COUNT(*) AS row_count
-FROM {{ source('raw', 'order_reviews') }}
+FROM {{ ref('stg_order_reviews') }}
 GROUP BY
     review_id,
     order_id

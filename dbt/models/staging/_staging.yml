@@ -259,3 +259,50 @@ models:
         description: Monetary value of the payment component.
         data_tests:
           - not_null
+
+  - name: stg_order_reviews
+    description: Cleaned and typed review records, one row per review ID and order ID.
+
+    columns:
+      - name: review_id
+        description: Review identifier that may occur across multiple orders.
+        data_tests:
+          - not_null
+
+      - name: order_id
+        description: Order associated with the review.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+
+      - name: review_score
+        description: Customer satisfaction score from one to five.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 5
+
+      - name: review_comment_title
+        description: Optional title submitted with the review.
+
+      - name: review_comment_message
+        description: Optional written review message.
+
+      - name: review_created_at
+        description: Timestamp when the review request was created.
+        data_tests:
+          - not_null
+
+      - name: review_answered_at
+        description: Timestamp when the customer submitted the review.
+        data_tests:
+          - not_null
