@@ -306,3 +306,34 @@ models:
         description: Timestamp when the customer submitted the review.
         data_tests:
           - not_null
+
+  - name: stg_geolocation
+    description: >
+      Cleaned and typed geographic observations at one row per
+      source geolocation record.
+
+    columns:
+      - name: geolocation_zip_code_prefix
+        description: Five-character ZIP-code prefix for the observation.
+        data_tests:
+          - not_null
+
+      - name: geolocation_latitude
+        description: Latitude of the geographic observation.
+        data_tests:
+          - not_null
+
+      - name: geolocation_longitude
+        description: Longitude of the geographic observation.
+        data_tests:
+          - not_null
+
+      - name: geolocation_city
+        description: Geographic city normalized to lowercase.
+        data_tests:
+          - not_null
+
+      - name: geolocation_state
+        description: Two-character Brazilian state code.
+        data_tests:
+          - not_null
