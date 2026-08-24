@@ -148,3 +148,86 @@ models:
         description: Whether the order contains an undefined payment type.
         data_tests:
           - not_null
+
+  - name: int_order_reviews_by_order
+    description: Review reduced to one row per order using the most recent review as the primary review.
+
+    columns:
+      - name: order_id
+        description: Identifier of the reviewed order.
+        data_tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+
+      - name: latest_review_id
+        description: Identifier of the most recently answered review.
+        data_tests:
+          - not_null
+
+      - name: latest_review_score
+        description: Score from the most recently answered review.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 5
+
+      - name: latest_review_comment_title
+        description: Title attached to the latest review, if provided.
+
+      - name: latest_review_comment_message
+        description: Message attached to the latest review, if provided.
+
+      - name: latest_review_created_at
+        description: Timestamp when the latest review survey was created.
+        data_tests:
+          - not_null
+
+      - name: latest_review_answered_at
+        description: Timestamp when the latest review was answered.
+        data_tests:
+          - not_null
+
+      - name: review_record_count
+        description: Number of review records associated with the order.
+        data_tests:
+          - not_null
+
+      - name: average_review_score
+        description: Average score across all review records for the order.
+        data_tests:
+          - not_null
+
+      - name: minimum_review_score
+        description: Lowest review score recorded for the order.
+        data_tests:
+          - not_null
+
+      - name: maximum_review_score
+        description: Highest review score recorded for the order.
+        data_tests:
+          - not_null
+
+      - name: has_conflicting_review_scores
+        description: Check if the order has more than one distinct score.
+        data_tests:
+          - not_null
+
+      - name: review_message_count
+        description: Number of review records with a message.
+        data_tests:
+          - not_null
+
+      - name: first_review_answered_at
+        description: Earliest review response timestamp for the order.
+        data_tests:
+          - not_null
