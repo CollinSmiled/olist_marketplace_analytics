@@ -231,3 +231,59 @@ models:
         description: Earliest review response timestamp for the order.
         data_tests:
           - not_null
+
+  - name: int_orders_enriched
+    description: One row per order enriched with item, payment, review, and delivery performance measures.
+
+    columns:
+      - name: order_id
+        description: Unique identifier of the order.
+        data_tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+
+      - name: customer_id
+        description: Customer record associated with the order.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
+
+      - name: has_item_details
+        description: Whether item records are available for the order.
+        data_tests:
+          - not_null
+
+      - name: has_payment_details
+        description: Whether payment records are available for the order.
+        data_tests:
+          - not_null
+
+      - name: has_review
+        description: Whether review records are available for the order.
+        data_tests:
+          - not_null
+
+      - name: is_delivered_late
+        description: >
+          Whether a delivered order arrived after its estimated date.
+          Null when delivery lateness cannot be evaluated.
+
+      - name: delivery_time_days
+        description: Days from purchase to customer delivery.
+
+      - name: delivery_delay_days
+        description: >
+          Days between actual and estimated delivery. Positive values
+          indicate late delivery and negative values indicate early delivery.
+
+      - name: has_delivery_timeline_anomaly
+        description: Whether the order contains an invalid delivery sequence.
+        data_tests:
+          - not_null
