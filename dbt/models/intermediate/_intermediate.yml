@@ -89,3 +89,62 @@ models:
         description: Latest item shipping deadline in the order.
         data_tests:
           - not_null
+
+  - name: int_order_payments_by_order
+    description: Payment measures aggregated to one row per order to prevent payment-value multiplication when joining.
+
+    columns:
+      - name: order_id
+        description: Identifier of the order.
+        data_tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+
+      - name: payment_record_count
+        description: Number of payment records associated with the order.
+        data_tests:
+          - not_null
+
+      - name: distinct_payment_type_count
+        description: Number of distinct payment types used by the order.
+        data_tests:
+          - not_null
+
+      - name: payment_value_total
+        description: Total payment value recorded for the order.
+        data_tests:
+          - not_null
+
+      - name: maximum_payment_installments
+        description: Highest installment count among the order payments.
+        data_tests:
+          - not_null
+
+      - name: used_credit_card
+        description: Whether the order used a credit-card payment.
+        data_tests:
+          - not_null
+
+      - name: used_boleto
+        description: Whether the order used a boleto payment.
+        data_tests:
+          - not_null
+
+      - name: used_voucher
+        description: Whether the order used a voucher payment.
+        data_tests:
+          - not_null
+
+      - name: used_debit_card
+        description: Whether the order used a debit-card payment.
+        data_tests:
+          - not_null
+
+      - name: used_not_defined_payment
+        description: Whether the order contains an undefined payment type.
+        data_tests:
+          - not_null
