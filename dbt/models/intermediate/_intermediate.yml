@@ -1,0 +1,289 @@
+version: 2
+
+models:
+  - name: int_geolocation_by_zip
+    description: One representative geographic record per ZIP-code prefix, calculated from distinct geolocation data.
+
+    columns:
+      - name: geolocation_zip_code_prefix
+        description: Five-character ZIP-code prefix.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: geolocation_latitude
+        description: Median latitude across deduplicated ZIP observations.
+        data_tests:
+          - not_null
+
+      - name: geolocation_longitude
+        description: Median longitude across deduplicated ZIP observations.
+        data_tests:
+          - not_null
+
+      - name: geolocation_city
+        description: Most frequently observed city for the ZIP prefix.
+        data_tests:
+          - not_null
+
+      - name: geolocation_state
+        description: State associated with the representative city.
+        data_tests:
+          - not_null
+
+      - name: distinct_observation_count
+        description: Number of distinct geolocation observations used to calculate the representative ZIP record.
+        data_tests:
+          - not_null
+
+  - name: int_order_items_by_order
+    description: Order-item measures aggregated to one row per order to prevent row multiplication when joining.
+
+    columns:
+      - name: order_id
+        description: Identifier of the order.
+        data_tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+
+      - name: item_count
+        description: Number of item rows in the order.
+        data_tests:
+          - not_null
+
+      - name: distinct_product_count
+        description: Number of distinct products in the order.
+        data_tests:
+          - not_null
+
+      - name: distinct_seller_count
+        description: Number of distinct sellers in the order.
+        data_tests:
+          - not_null
+
+      - name: item_price_total
+        description: Total listed item value excluding freight.
+        data_tests:
+          - not_null
+
+      - name: freight_value_total
+        description: Total freight value across the order items.
+        data_tests:
+          - not_null
+
+      - name: item_and_freight_total
+        description: Combined item-price and freight value.
+        data_tests:
+          - not_null
+
+      - name: earliest_shipping_limit_at
+        description: Earliest item shipping deadline in the order.
+        data_tests:
+          - not_null
+
+      - name: latest_shipping_limit_at
+        description: Latest item shipping deadline in the order.
+        data_tests:
+          - not_null
+
+  - name: int_order_payments_by_order
+    description: Payment measures aggregated to one row per order to prevent payment-value multiplication when joining.
+
+    columns:
+      - name: order_id
+        description: Identifier of the order.
+        data_tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+
+      - name: payment_record_count
+        description: Number of payment records associated with the order.
+        data_tests:
+          - not_null
+
+      - name: distinct_payment_type_count
+        description: Number of distinct payment types used by the order.
+        data_tests:
+          - not_null
+
+      - name: payment_value_total
+        description: Total payment value recorded for the order.
+        data_tests:
+          - not_null
+
+      - name: maximum_payment_installments
+        description: Highest installment count among the order payments.
+        data_tests:
+          - not_null
+
+      - name: used_credit_card
+        description: Whether the order used a credit-card payment.
+        data_tests:
+          - not_null
+
+      - name: used_boleto
+        description: Whether the order used a boleto payment.
+        data_tests:
+          - not_null
+
+      - name: used_voucher
+        description: Whether the order used a voucher payment.
+        data_tests:
+          - not_null
+
+      - name: used_debit_card
+        description: Whether the order used a debit-card payment.
+        data_tests:
+          - not_null
+
+      - name: used_not_defined_payment
+        description: Whether the order contains an undefined payment type.
+        data_tests:
+          - not_null
+
+  - name: int_order_reviews_by_order
+    description: Review reduced to one row per order using the most recent review as the primary review.
+
+    columns:
+      - name: order_id
+        description: Identifier of the reviewed order.
+        data_tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+
+      - name: latest_review_id
+        description: Identifier of the most recently answered review.
+        data_tests:
+          - not_null
+
+      - name: latest_review_score
+        description: Score from the most recently answered review.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 5
+
+      - name: latest_review_comment_title
+        description: Title attached to the latest review, if provided.
+
+      - name: latest_review_comment_message
+        description: Message attached to the latest review, if provided.
+
+      - name: latest_review_created_at
+        description: Timestamp when the latest review survey was created.
+        data_tests:
+          - not_null
+
+      - name: latest_review_answered_at
+        description: Timestamp when the latest review was answered.
+        data_tests:
+          - not_null
+
+      - name: review_record_count
+        description: Number of review records associated with the order.
+        data_tests:
+          - not_null
+
+      - name: average_review_score
+        description: Average score across all review records for the order.
+        data_tests:
+          - not_null
+
+      - name: minimum_review_score
+        description: Lowest review score recorded for the order.
+        data_tests:
+          - not_null
+
+      - name: maximum_review_score
+        description: Highest review score recorded for the order.
+        data_tests:
+          - not_null
+
+      - name: has_conflicting_review_scores
+        description: Check if the order has more than one distinct score.
+        data_tests:
+          - not_null
+
+      - name: review_message_count
+        description: Number of review records with a message.
+        data_tests:
+          - not_null
+
+      - name: first_review_answered_at
+        description: Earliest review response timestamp for the order.
+        data_tests:
+          - not_null
+
+  - name: int_orders_enriched
+    description: One row per order enriched with item, payment, review, and delivery performance measures.
+
+    columns:
+      - name: order_id
+        description: Unique identifier of the order.
+        data_tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+
+      - name: customer_id
+        description: Customer record associated with the order.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
+
+      - name: has_item_details
+        description: Whether item records are available for the order.
+        data_tests:
+          - not_null
+
+      - name: has_payment_details
+        description: Whether payment records are available for the order.
+        data_tests:
+          - not_null
+
+      - name: has_review
+        description: Whether review records are available for the order.
+        data_tests:
+          - not_null
+
+      - name: is_delivered_late
+        description: >
+          Whether a delivered order arrived after its estimated date.
+          Null when delivery lateness cannot be evaluated.
+
+      - name: delivery_time_days
+        description: Days from purchase to customer delivery.
+
+      - name: delivery_delay_days
+        description: >
+          Days between actual and estimated delivery. Positive values
+          indicate late delivery and negative values indicate early delivery.
+
+      - name: has_delivery_timeline_anomaly
+        description: Whether the order contains an invalid delivery sequence.
+        data_tests:
+          - not_null
