@@ -14,6 +14,7 @@ The project investigates why orders are delayed, which sellers are underperformi
 - Milestone 2: PostgreSQL raw ingestion
 - Milestone 3: Dockerized PostgreSQL and ingestion
 - Milestone 4: dbt source definitions, staging models, and data quality tests
+- Milestone 5: reusable intermediate models and order-level processing
 
 ## Planned Technology Stack
 
@@ -35,23 +36,27 @@ The project investigates why orders are delayed, which sellers are underperformi
 
 Copy the environment template and add your PostgreSQL password:
 
+```powershell
 Copy-Item .env.example .env
-
+```
 
 Build the ingestion image:
 
+```powershell
 docker compose build ingestion
-
+```
 
 Start PostgreSQL:
 
+```powershell
 docker compose up -d postgres
-
+```
 
 Load the raw CSV files:
 
+```powershell
 docker compose run --rm ingestion
-
+```
 
 The ingestion pipeline validates the source files, performs a transactional full refresh, and verifies the loaded row counts.
 
@@ -75,6 +80,6 @@ Build and test the transformation project:
 docker compose run --rm dbt build
 ```
 
-The staging part cleans and type-casts the nine raw datasets as views in the `warehouse_staging` schema. The build currently includes 9 models and 76 data quality tests.
+The dbt project builds nine cleaned and typed staging views in `warehouse_staging` and five intermediate views in `warehouse_intermediate`. The build currently includes 14 models and 136 data quality tests.
 
 A warning is logged for 13 products whose original Portuguese category names are missing from the translation table.
