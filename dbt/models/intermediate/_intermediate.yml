@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: int_geolocation_by_zip
+    description: One representative geographic record per ZIP-code prefix, calculated from distinct geolocation data.
+
+    columns:
+      - name: geolocation_zip_code_prefix
+        description: Five-character ZIP-code prefix.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: geolocation_latitude
+        description: Median latitude across deduplicated ZIP observations.
+        data_tests:
+          - not_null
+
+      - name: geolocation_longitude
+        description: Median longitude across deduplicated ZIP observations.
+        data_tests:
+          - not_null
+
+      - name: geolocation_city
+        description: Most frequently observed city for the ZIP prefix.
+        data_tests:
+          - not_null
+
+      - name: geolocation_state
+        description: State associated with the representative city.
+        data_tests:
+          - not_null
+
+      - name: distinct_observation_count
+        description: Number of distinct geolocation observations used to calculate the representative ZIP record.
+        data_tests:
+          - not_null
