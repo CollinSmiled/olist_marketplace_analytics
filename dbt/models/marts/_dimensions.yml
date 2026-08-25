@@ -137,3 +137,65 @@ models:
 
       - name: product_volume_cm3
         description: Calculated product volume in cubic centimeters.
+
+  - name: dim_date
+    description: Calendar dimension with one row per date spanning all order-related dates in the source data.
+    columns:
+      - name: date_key
+        description: Date warehouse key in YYYYMMDD integer format.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: date_day
+        description: Calendar date represented by the row.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: year_number
+        description: Calendar year number.
+
+      - name: quarter_number
+        description: Calendar quarter number from 1 to 4.
+
+      - name: quarter_name
+        description: Calendar quarter label such as Q1.
+
+      - name: month_number
+        description: Calendar month number from 1 to 12.
+
+      - name: month_name
+        description: Full calendar month name.
+
+      - name: month_short_name
+        description: Abbreviated calendar month name.
+
+      - name: year_month
+        description: Calendar year and month label in YYYY-MM format.
+
+      - name: month_start_date
+        description: First date of the calendar month.
+
+      - name: iso_year_number
+        description: ISO week-numbering year.
+
+      - name: week_of_year
+        description: ISO week number from 1 to 53.
+
+      - name: year_week
+        description: ISO year and week label in IYYY-IW format.
+
+      - name: day_of_month
+        description: Day number within the calendar month.
+
+      - name: day_of_week
+        description: ISO weekday number where Monday is 1 and Sunday is 7.
+
+      - name: day_name
+        description: Full weekday name.
+
+      - name: is_weekend
+        description: Whether the date is Saturday or Sunday.
+        data_tests:
+          - not_null
