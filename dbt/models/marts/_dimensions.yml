@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: Customer dimension at one row per order-specific customer record, added with their own ZIP-prefix coordinates.
+
+    columns:
+      - name: customer_id
+        description: Unique order-specific customer record identifier.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: customer_unique_id
+        description: Shopper identifier used to recognize the same customer across multiple orders.
+        data_tests:
+          - not_null
+
+      - name: customer_zip_code_prefix
+        description: Five-character ZIP-code prefix for the customer record.
+        data_tests:
+          - not_null
+
+      - name: customer_city
+        description: Customer city recorded for the order.
+        data_tests:
+          - not_null
+
+      - name: customer_state
+        description: Two-character Brazilian state code for the customer.
+        data_tests:
+          - not_null
+
+      - name: customer_latitude
+        description: Representative latitude for the ZIP-code prefix.
+
+      - name: customer_longitude
+        description: Representative longitude for the ZIP-code prefix.
+
+      - name: geolocation_observation_count
+        description: Number of distinct geolocation observations supporting the coordinates.
+
+      - name: has_geolocation
+        description: Whether coordinates were found.
+        data_tests:
+          - not_null
