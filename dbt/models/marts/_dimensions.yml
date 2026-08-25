@@ -40,7 +40,46 @@ models:
       - name: geolocation_observation_count
         description: Number of distinct geolocation observations supporting the coordinates.
 
-      - name: has_geolocation
+      - name: has_geolocation_coordinates
         description: Whether coordinates were found.
+        data_tests:
+          - not_null
+
+  - name: dim_sellers
+    description: Seller dimension at one row per seller, enriched with their own ZIP-prefix coordinates.
+
+    columns:
+      - name: seller_id
+        description: Unique seller identifier.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: seller_zip_code_prefix
+        description: Five-character ZIP-code prefix for the seller.
+        data_tests:
+          - not_null
+
+      - name: seller_city
+        description: City recorded for the seller.
+        data_tests:
+          - not_null
+
+      - name: seller_state
+        description: Two-character Brazilian state code for the seller.
+        data_tests:
+          - not_null
+
+      - name: seller_latitude
+        description: Representative latitude for the ZIP-code prefix.
+
+      - name: seller_longitude
+        description: Representative longitude for the ZIP-code prefix.
+
+      - name: geolocation_observation_count
+        description: Number of distinct observations supporting the coordinates.
+
+      - name: has_geolocation_coordinates
+        description: Whether representative coordinates were found.
         data_tests:
           - not_null

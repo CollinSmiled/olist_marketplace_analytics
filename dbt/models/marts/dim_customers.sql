@@ -19,7 +19,7 @@ SELECT
     geography.distinct_observation_count
         AS geolocation_observation_count,
     geography.geolocation_zip_code_prefix IS NOT NULL
-        AS has_geolocation
+        AS has_geolocation_coordinates
 FROM customers
 LEFT JOIN geography
     ON customers.customer_zip_code_prefix
