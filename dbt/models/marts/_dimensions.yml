@@ -1,0 +1,201 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: Customer dimension at one row per order-specific customer record, added with their own ZIP-prefix coordinates.
+
+    columns:
+      - name: customer_id
+        description: Unique order-specific customer record identifier.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: customer_unique_id
+        description: Shopper identifier used to recognize the same customer across multiple orders.
+        data_tests:
+          - not_null
+
+      - name: customer_zip_code_prefix
+        description: Five-character ZIP-code prefix for the customer record.
+        data_tests:
+          - not_null
+
+      - name: customer_city
+        description: Customer city recorded for the order.
+        data_tests:
+          - not_null
+
+      - name: customer_state
+        description: Two-character Brazilian state code for the customer.
+        data_tests:
+          - not_null
+
+      - name: customer_latitude
+        description: Representative latitude for the ZIP-code prefix.
+
+      - name: customer_longitude
+        description: Representative longitude for the ZIP-code prefix.
+
+      - name: geolocation_observation_count
+        description: Number of distinct geolocation observations supporting the coordinates.
+
+      - name: has_geolocation_coordinates
+        description: Whether coordinates were found.
+        data_tests:
+          - not_null
+
+  - name: dim_sellers
+    description: Seller dimension at one row per seller, enriched with their own ZIP-prefix coordinates.
+
+    columns:
+      - name: seller_id
+        description: Unique seller identifier.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: seller_zip_code_prefix
+        description: Five-character ZIP-code prefix for the seller.
+        data_tests:
+          - not_null
+
+      - name: seller_city
+        description: City recorded for the seller.
+        data_tests:
+          - not_null
+
+      - name: seller_state
+        description: Two-character Brazilian state code for the seller.
+        data_tests:
+          - not_null
+
+      - name: seller_latitude
+        description: Representative latitude for the ZIP-code prefix.
+
+      - name: seller_longitude
+        description: Representative longitude for the ZIP-code prefix.
+
+      - name: geolocation_observation_count
+        description: Number of distinct observations supporting the coordinates.
+
+      - name: has_geolocation_coordinates
+        description: Whether representative coordinates were found.
+        data_tests:
+          - not_null
+
+  - name: dim_products
+    description: Product dimension at one row per product, with translated categories and physical product attributes.
+    columns:
+      - name: product_id
+        description: Unique product identifier.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: product_category_name_portuguese
+        description: Original Portuguese product category, if available.
+
+      - name: product_category_name_english
+        description: English category translation, if available.
+
+      - name: product_category_name
+        description: Reporting category using English, Portuguese, then unknown.
+        data_tests:
+          - not_null
+
+      - name: has_product_category
+        description: Whether the source product has a category.
+        data_tests:
+          - not_null
+
+      - name: has_english_category_translation
+        description: Whether an English category translation was found.
+        data_tests:
+          - not_null
+
+      - name: product_name_length
+        description: Number of characters in the product name.
+
+      - name: product_description_length
+        description: Number of characters in the product description.
+
+      - name: product_photos_quantity
+        description: Number of product photos.
+
+      - name: product_weight_g
+        description: Product weight in grams.
+
+      - name: product_length_cm
+        description: Product length in centimeters.
+
+      - name: product_height_cm
+        description: Product height in centimeters.
+
+      - name: product_width_cm
+        description: Product width in centimeters.
+
+      - name: product_volume_cm3
+        description: Calculated product volume in cubic centimeters.
+
+  - name: dim_date
+    description: Calendar dimension with one row per date spanning order and item milestones in the source data.
+    columns:
+      - name: date_key
+        description: Date warehouse key in YYYYMMDD integer format.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: date_day
+        description: Calendar date represented by the row.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: year_number
+        description: Calendar year number.
+
+      - name: quarter_number
+        description: Calendar quarter number from 1 to 4.
+
+      - name: quarter_name
+        description: Calendar quarter label such as Q1.
+
+      - name: month_number
+        description: Calendar month number from 1 to 12.
+
+      - name: month_name
+        description: Full calendar month name.
+
+      - name: month_short_name
+        description: Abbreviated calendar month name.
+
+      - name: year_month
+        description: Calendar year and month label in YYYY-MM format.
+
+      - name: month_start_date
+        description: First date of the calendar month.
+
+      - name: iso_year_number
+        description: ISO week-numbering year.
+
+      - name: week_of_year
+        description: ISO week number from 1 to 53.
+
+      - name: year_week
+        description: ISO year and week label in IYYY-IW format.
+
+      - name: day_of_month
+        description: Day number within the calendar month.
+
+      - name: day_of_week
+        description: ISO weekday number where Monday is 1 and Sunday is 7.
+
+      - name: day_name
+        description: Full weekday name.
+
+      - name: is_weekend
+        description: Whether the date is Saturday or Sunday.
+        data_tests:
+          - not_null
