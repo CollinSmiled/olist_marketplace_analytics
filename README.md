@@ -15,6 +15,7 @@ The project investigates why orders are delayed, which sellers are underperformi
 - Milestone 3: Dockerized PostgreSQL and ingestion
 - Milestone 4: dbt source definitions, staging models, and data quality tests
 - Milestone 5: reusable intermediate models and order-level processing
+- Milestone 6: dimensional warehouse with four dimensions and two fact tables
 
 ## Planned Technology Stack
 
@@ -80,6 +81,17 @@ Build and test the transformation project:
 docker compose run --rm dbt build
 ```
 
-The dbt project builds nine cleaned and typed staging views in `warehouse_staging` and five intermediate views in `warehouse_intermediate`. The build currently includes 14 models and 136 data quality tests.
+The dbt project builds nine cleaned and typed staging views in `warehouse_staging`, five intermediate views in `warehouse_intermediate`, and six dimensional tables in `warehouse_marts`. The complete build contains 20 models and 206 data quality tests.
 
 A warning is logged for 13 products whose original Portuguese category names are missing from the translation table.
+
+## Warehouse Design
+
+The reporting layer uses a fact constellation with two grains:
+
+- `fct_orders`: one row per order
+- `fct_order_items`: one row per order item
+
+![Olist warehouse conceptual schema](docs/diagrams/warehouse_schema_conceptual.png)
+
+See [Warehouse Design](docs/warehouse_design.md) for the detailed schema.
