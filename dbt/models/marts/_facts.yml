@@ -1,0 +1,194 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: Accumulating order fact table at one row per order, containing item and payment totals, review results, and delivery metrics.
+
+    columns:
+      - name: order_id
+        description: Unique order identifier of the fact table.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: Customer record associated with the order.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customers')
+                field: customer_id
+
+      - name: order_purchase_date_key
+        description: Purchase date key referencing the date dimension.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: order_approved_date_key
+        description: Approval date key referencing the date dimension.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: order_delivered_carrier_date_key
+        description: Carrier handoff date key referencing the date dimension.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: order_delivered_customer_date_key
+        description: Customer delivery date key referencing the date dimension.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: order_estimated_delivery_date_key
+        description: Estimated delivery date key referencing the date dimension.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: order_status
+        description: Current status of the order.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - approved
+                  - canceled
+                  - created
+                  - delivered
+                  - invoiced
+                  - processing
+                  - shipped
+                  - unavailable
+
+      - name: order_purchase_at
+        description: Timestamp when the order was placed.
+
+      - name: order_approved_at
+        description: Timestamp when payment was approved.
+
+      - name: order_delivered_carrier_at
+        description: Timestamp when the order was handed to the carrier.
+
+      - name: order_delivered_customer_at
+        description: Timestamp when the order was delivered to the customer.
+
+      - name: order_estimated_delivery_at
+        description: Original estimated customer delivery timestamp.
+
+      - name: has_item_details
+        description: Whether item records are available for the order.
+        data_tests:
+          - not_null
+
+      - name: item_count
+        description: Number of item rows in the order.
+
+      - name: distinct_product_count
+        description: Number of distinct products in the order.
+
+      - name: distinct_seller_count
+        description: Number of distinct sellers fulfilling the order.
+
+      - name: item_price_total
+        description: Total product price before freight.
+
+      - name: freight_value_total
+        description: Total freight charged across order items.
+
+      - name: item_and_freight_total
+        description: Total item price plus freight.
+
+      - name: earliest_shipping_limit_at
+        description: Earliest seller shipping-limit timestamp in the order.
+
+      - name: latest_shipping_limit_at
+        description: Latest seller shipping-limit timestamp in the order.
+
+      - name: has_payment_details
+        description: Whether payment records are available for the order.
+        data_tests:
+          - not_null
+
+      - name: payment_record_count
+        description: Number of payment records associated with the order.
+
+      - name: distinct_payment_type_count
+        description: Number of distinct payment methods used.
+
+      - name: payment_value_total
+        description: Total recorded payment value.
+
+      - name: maximum_payment_installments
+        description: Largest installment count recorded for the order.
+
+      - name: used_credit_card
+        description: Whether any payment used a credit card.
+
+      - name: used_boleto
+        description: Whether any payment used boleto.
+
+      - name: used_voucher
+        description: Whether any payment used a voucher.
+
+      - name: used_debit_card
+        description: Whether any payment used a debit card.
+
+      - name: used_not_defined_payment
+        description: Whether any payment had an undefined method.
+
+      - name: has_review
+        description: Whether the order has at least one review.
+        data_tests:
+          - not_null
+
+      - name: latest_review_score
+        description: Score from the latest answered review.
+
+      - name: average_review_score
+        description: Average score across all reviews for the order.
+
+      - name: review_record_count
+        description: Number of review records for the order.
+
+      - name: has_conflicting_review_scores
+        description: Whether multiple reviews contain different scores.
+
+      - name: review_message_count
+        description: Number of reviews containing a message.
+
+      - name: latest_review_answered_at
+        description: Latest review-answer timestamp for the order.
+
+      - name: is_delivered_late
+        description: Whether a delivered order arrived after its estimated date. Null when lateness cannot be evaluated.
+
+      - name: delivery_time_days
+        description: Days from purchase to customer delivery.
+
+      - name: delivery_delay_days
+        description: >
+          Days between actual and estimated delivery. Positive means late and
+          negative means early.
+
+      - name: has_delivery_timeline_anomaly
+        description: Whether delivery timestamps contain an invalid sequence.
+        data_tests:
+          - not_null
