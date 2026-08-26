@@ -139,7 +139,7 @@ models:
         description: Calculated product volume in cubic centimeters.
 
   - name: dim_date
-    description: Calendar dimension with one row per date spanning all order-related dates in the source data.
+    description: Calendar dimension with one row per date spanning order and item milestones in the source data.
     columns:
       - name: date_key
         description: Date warehouse key in YYYYMMDD integer format.

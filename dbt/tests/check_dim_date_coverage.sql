@@ -21,12 +21,25 @@ WITH source_dates AS (
 
     SELECT order_estimated_delivery_at::DATE
     FROM {{ ref('stg_orders') }}
+
+    UNION ALL
+
+    SELECT shipping_limit_at::DATE
+    FROM {{ ref('stg_order_items') }}
 ),
 
 expected AS (
     SELECT
-        MIN(date_day) AS minimum_date,
-        MAX(date_day) AS maximum_date
+        DATE_TRUNC(
+            'year',
+            MIN(date_day)
+        )::DATE AS minimum_date,
+
+        (
+            DATE_TRUNC('year', MAX(date_day))
+            + INTERVAL '1 year'
+            - INTERVAL '1 day'
+        )::DATE AS maximum_date
     FROM source_dates
     WHERE date_day IS NOT NULL
 ),
