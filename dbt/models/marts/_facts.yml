@@ -192,3 +192,116 @@ models:
         description: Whether delivery timestamps contain an invalid sequence.
         data_tests:
           - not_null
+
+  - name: fct_order_items
+    description: Transaction fact table at one row per order item, containing customer, product, seller, date, price, and freight information.
+
+    columns:
+      - name: order_id
+        description: Order containing the item.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_orders')
+                field: order_id
+
+      - name: order_item_id
+        description: Sequential item identifier within the order.
+        data_tests:
+          - not_null
+
+      - name: customer_id
+        description: Customer record associated with the order.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customers')
+                field: customer_id
+
+      - name: product_id
+        description: Product purchased in the item row.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_products')
+                field: product_id
+
+      - name: seller_id
+        description: Seller fulfilling the item.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_sellers')
+                field: seller_id
+
+      - name: order_purchase_date_key
+        description: Order purchase date key.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: shipping_limit_date_key
+        description: Seller shipping-limit date key.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: order_status
+        description: Lifecycle status of the containing order.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - approved
+                  - canceled
+                  - created
+                  - delivered
+                  - invoiced
+                  - processing
+                  - shipped
+                  - unavailable
+
+      - name: order_purchase_at
+        description: Timestamp when the containing order was placed.
+        data_tests:
+          - not_null
+
+      - name: shipping_limit_at
+        description: Deadline for the seller to hand the item to the carrier.
+        data_tests:
+          - not_null
+
+      - name: item_quantity
+        description: Item units represented by the atomic fact row.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - 1
+
+      - name: item_price
+        description: Product price for the item.
+        data_tests:
+          - not_null
+
+      - name: freight_value
+        description: Freight charged for the item.
+        data_tests:
+          - not_null
+
+      - name: item_and_freight_value
+        description: Item price plus freight.
+        data_tests:
+          - not_null
