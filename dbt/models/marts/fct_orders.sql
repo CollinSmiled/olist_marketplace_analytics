@@ -71,5 +71,29 @@ SELECT
     is_delivered_late,
     delivery_time_days,
     delivery_delay_days,
+    delivery_delay_calendar_days,
+
+    CASE
+        WHEN delivery_delay_calendar_days <= 0
+            THEN 'On time or early'
+        WHEN delivery_delay_calendar_days <= 3
+            THEN '1-3 days late'
+        WHEN delivery_delay_calendar_days <= 7
+            THEN '4-7 days late'
+        WHEN delivery_delay_calendar_days > 7
+            THEN '8+ days late'
+    END AS delivery_delay_band,
+
+    CASE
+        WHEN delivery_delay_calendar_days <= 0
+            THEN 1
+        WHEN delivery_delay_calendar_days <= 3
+            THEN 2
+        WHEN delivery_delay_calendar_days <= 7
+            THEN 3
+        WHEN delivery_delay_calendar_days > 7
+            THEN 4
+    END AS delivery_delay_band_sort,
+
     has_delivery_timeline_anomaly
 FROM orders
