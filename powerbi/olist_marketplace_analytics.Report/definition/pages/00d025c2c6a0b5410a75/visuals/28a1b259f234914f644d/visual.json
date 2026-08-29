@@ -1,19 +1,38 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
-  "name": "85e09da5912132977813",
+  "name": "28a1b259f234914f644d",
   "position": {
-    "x": 880,
+    "x": 224,
     "y": 256,
-    "z": 8000,
+    "z": 7000,
     "height": 448,
-    "width": 383.99999999999994,
-    "tabOrder": 8000
+    "width": 528,
+    "tabOrder": 7000
   },
   "visual": {
-    "visualType": "clusteredBarChart",
+    "visualType": "lineChart",
     "query": {
       "queryState": {
         "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Date"
+                    }
+                  },
+                  "Property": "month_start_date"
+                }
+              },
+              "queryRef": "Date.month_start_date",
+              "nativeQueryRef": "Count of month_start_date",
+              "active": true
+            }
+          ]
+        },
+        "Rows": {
           "projections": [
             {
               "field": {
@@ -27,8 +46,7 @@
                 }
               },
               "queryRef": "Products.product_category_name",
-              "nativeQueryRef": "product_category_name",
-              "active": true
+              "nativeQueryRef": "product_category_name"
             }
           ]
         },
@@ -55,57 +73,36 @@
         "sort": [
           {
             "field": {
-              "Measure": {
+              "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "Key Measures"
+                    "Entity": "Date"
                   }
                 },
-                "Property": "Delivered GMV"
+                "Property": "month_start_date"
               }
             },
-            "direction": "Descending"
+            "direction": "Ascending"
           }
         ],
         "isDefaultSort": true
       }
     },
     "objects": {
-      "categoryAxis": [
+      "smallMultiplesLayout": [
         {
           "properties": {
-            "concatenateLabels": {
+            "columnCount": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "2L"
                 }
               }
             },
-            "show": {
+            "rowCount": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "titleText": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Product Category'"
-                }
-              }
-            },
-            "titleFontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "showAxisTitle": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
+                  "Value": "3L"
                 }
               }
             }
@@ -115,13 +112,6 @@
       "valueAxis": [
         {
           "properties": {
-            "titleFontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
-                }
-              }
-            },
             "showAxisTitle": {
               "expr": {
                 "Literal": {
@@ -132,39 +122,10 @@
           }
         }
       ],
-      "labels": [
+      "categoryAxis": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
-    "visualContainerObjects": {
-      "title": [
-        {
-          "properties": {
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Top 10 Product Categories by Delivered GMV'"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "bold": {
+            "showAxisTitle": {
               "expr": {
                 "Literal": {
                   "Value": "false"
@@ -173,7 +134,9 @@
             }
           }
         }
-      ],
+      ]
+    },
+    "visualContainerObjects": {
       "border": [
         {
           "properties": {
@@ -181,6 +144,13 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
                 }
               }
             },
@@ -196,10 +166,10 @@
                 }
               }
             },
-            "radius": {
+            "width": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "6D"
                 }
               }
             }
@@ -224,13 +194,20 @@
           }
         }
       ],
-      "visualHeader": [
+      "title": [
         {
           "properties": {
-            "show": {
+            "text": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "'Monthly GMV Trends for Leading Categories'"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
                 }
               }
             }
@@ -243,7 +220,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "5c6c062ba4db14af0676",
+        "name": "462ac436cd57dbec7874",
         "field": {
           "Column": {
             "Expression": {
@@ -304,7 +281,7 @@
                         }
                       }
                     ],
-                    "Top": 10
+                    "Top": 6
                   }
                 }
               },

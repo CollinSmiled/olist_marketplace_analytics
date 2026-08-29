@@ -1,37 +1,18 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
-  "name": "7ca342ed89289605871c",
+  "name": "f1babb336ae247a516b8",
   "position": {
-    "x": 224,
-    "y": 256,
-    "z": 7000,
-    "height": 448,
-    "width": 640,
-    "tabOrder": 7000
+    "x": 768.00000000000011,
+    "y": 576,
+    "z": 9000,
+    "height": 128,
+    "width": 496,
+    "tabOrder": 9000
   },
   "visual": {
-    "visualType": "lineClusteredColumnComboChart",
+    "visualType": "hundredPercentStackedBarChart",
     "query": {
       "queryState": {
-        "Category": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Date"
-                    }
-                  },
-                  "Property": "month_start_date"
-                }
-              },
-              "queryRef": "Date.month_start_date",
-              "nativeQueryRef": "month_start_date",
-              "active": true
-            }
-          ]
-        },
         "Y": {
           "projections": [
             {
@@ -46,12 +27,9 @@
                 }
               },
               "queryRef": "Key Measures.Delivered GMV",
-              "nativeQueryRef": "Delivered GMV"
-            }
-          ]
-        },
-        "Y2": {
-          "projections": [
+              "nativeQueryRef": "Product Value",
+              "displayName": "Product Value"
+            },
             {
               "field": {
                 "Measure": {
@@ -60,11 +38,12 @@
                       "Entity": "Key Measures"
                     }
                   },
-                  "Property": "Delivered Orders"
+                  "Property": "Delivered Freight Value"
                 }
               },
-              "queryRef": "Key Measures.Delivered Orders",
-              "nativeQueryRef": "Delivered Orders"
+              "queryRef": "Key Measures.Delivered Freight Value",
+              "nativeQueryRef": "Freight",
+              "displayName": "Freight"
             }
           ]
         }
@@ -73,16 +52,16 @@
         "sort": [
           {
             "field": {
-              "Column": {
+              "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "Date"
+                    "Entity": "Key Measures"
                   }
                 },
-                "Property": "month_start_date"
+                "Property": "Delivered GMV"
               }
             },
-            "direction": "Ascending"
+            "direction": "Descending"
           }
         ],
         "isDefaultSort": true
@@ -92,85 +71,17 @@
       "valueAxis": [
         {
           "properties": {
-            "secTitleText": {
+            "gridlineShow": {
               "expr": {
                 "Literal": {
-                  "Value": "'Delivered Orders'"
+                  "Value": "false"
                 }
               }
             },
-            "secTitleFontFamily": {
+            "showAxisTitle": {
               "expr": {
                 "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "titleFontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "categoryAxis": [
-        {
-          "properties": {
-            "titleFontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "titleText": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Purchase Month'"
-                }
-              }
-            },
-            "preferredCategoryWidth": {
-              "expr": {
-                "Literal": {
-                  "Value": "20D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "legend": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                  "Value": "false"
                 }
               }
             }
@@ -183,6 +94,19 @@
             "show": {
               "expr": {
                 "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "ribbonBands": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
                   "Value": "false"
                 }
               }
@@ -190,13 +114,53 @@
           }
         }
       ],
-      "zoom": [
+      "dataPoint": [
         {
           "properties": {
-            "show": {
+            "borderShow": {
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "borderColorMatchFill": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "borderSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "categoryAxis": [
+        {
+          "properties": {
+            "innerPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "layout": [
+        {
+          "properties": {
+            "stackedGapSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
                 }
               }
             }
@@ -211,7 +175,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Monthly Delivered GMV and Orders'"
+                  "Value": "'Delivered Value Composition'"
                 }
               }
             },
@@ -277,5 +241,37 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "bbce93c7cd2d8f27036f",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Key Measures"
+              }
+            },
+            "Property": "Delivered GMV"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "bdbfb4b38e5972149ab0",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Key Measures"
+              }
+            },
+            "Property": "Delivered Freight Value"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

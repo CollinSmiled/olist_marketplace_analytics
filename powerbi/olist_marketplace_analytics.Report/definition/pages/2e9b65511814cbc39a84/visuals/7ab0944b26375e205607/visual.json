@@ -98,23 +98,5 @@
       "filterChanges": true
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "1911ef97dcc27a13bb27",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Customers"
-              }
-            },
-            "Property": "customer_state"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }

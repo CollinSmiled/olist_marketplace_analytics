@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
-  "name": "bb021373b27aa859e136",
+  "name": "19195336bc21a97af460",
   "position": {
     "x": 224.00000000000003,
     "y": 144,
@@ -37,11 +37,11 @@
                       "Entity": "Key Measures"
                     }
                   },
-                  "Property": "Total Orders"
+                  "Property": "Delivered Orders With Items"
                 }
               },
-              "queryRef": "Key Measures.Total Orders",
-              "nativeQueryRef": "Total Orders"
+              "queryRef": "Key Measures.Delivered Orders With Items",
+              "nativeQueryRef": "Delivered Orders With Items"
             },
             {
               "field": {
@@ -51,11 +51,11 @@
                       "Entity": "Key Measures"
                     }
                   },
-                  "Property": "Unique Customers"
+                  "Property": "Delivered Units"
                 }
               },
-              "queryRef": "Key Measures.Unique Customers",
-              "nativeQueryRef": "Unique Customers"
+              "queryRef": "Key Measures.Delivered Units",
+              "nativeQueryRef": "Delivered Units"
             },
             {
               "field": {
@@ -79,11 +79,11 @@
                       "Entity": "Key Measures"
                     }
                   },
-                  "Property": "On-Time Delivery Rate"
+                  "Property": "Active Sellers"
                 }
               },
-              "queryRef": "Key Measures.On-Time Delivery Rate",
-              "nativeQueryRef": "On-Time Delivery Rate"
+              "queryRef": "Key Measures.Active Sellers",
+              "nativeQueryRef": "Active Sellers"
             },
             {
               "field": {
@@ -93,11 +93,11 @@
                       "Entity": "Key Measures"
                     }
                   },
-                  "Property": "Average Review Score"
+                  "Property": "Distinct Products Sold"
                 }
               },
-              "queryRef": "Key Measures.Average Review Score",
-              "nativeQueryRef": "Average Review Score"
+              "queryRef": "Key Measures.Distinct Products Sold",
+              "nativeQueryRef": "Distinct Products Sold"
             }
           ]
         }
@@ -196,7 +196,7 @@
             }
           },
           "selector": {
-            "metadata": "Key Measures.Total Orders"
+            "metadata": "Key Measures.Delivered Orders With Items"
           }
         },
         {
@@ -210,7 +210,35 @@
             }
           },
           "selector": {
-            "metadata": "Key Measures.Unique Customers"
+            "metadata": "Key Measures.Delivered Units"
+          }
+        },
+        {
+          "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Key Measures.Active Sellers"
+          }
+        },
+        {
+          "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Key Measures.Distinct Products Sold"
           }
         }
       ],
