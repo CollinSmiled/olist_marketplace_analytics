@@ -1,0 +1,91 @@
+table Sellers
+	lineageTag: 12efcc44-5dab-471b-b0db-34f145aae023
+
+	column seller_id
+		dataType: string
+		lineageTag: 77d8dbb5-5fe4-40a1-ae0b-9b91dd9a95c9
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_zip_code_prefix
+		dataType: string
+		lineageTag: 34e75589-d7cb-482f-9b55-b14e4b7bd6ee
+		dataCategory: PostalCode
+		summarizeBy: none
+		sourceColumn: seller_zip_code_prefix
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_city
+		dataType: string
+		lineageTag: 6d7c7640-909f-404b-90d3-05b0963e9cf6
+		dataCategory: City
+		summarizeBy: none
+		sourceColumn: seller_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_state
+		dataType: string
+		lineageTag: c6819d01-de07-4dc7-b86f-d5c27a4bdc9f
+		dataCategory: StateOrProvince
+		summarizeBy: none
+		sourceColumn: seller_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_latitude
+		dataType: double
+		lineageTag: c51b066a-5d2b-40d4-8e58-c18270693056
+		dataCategory: Latitude
+		summarizeBy: none
+		sourceColumn: seller_latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column seller_longitude
+		dataType: double
+		lineageTag: 71b7d02b-1c91-4fcd-b64e-1b2ae7f45225
+		dataCategory: Longitude
+		summarizeBy: none
+		sourceColumn: seller_longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column geolocation_observation_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 7ec841be-05a8-4bca-b676-ffb4ebbf7385
+		summarizeBy: none
+		sourceColumn: geolocation_observation_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_geolocation_coordinates
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 893b043b-af96-4621-a983-792d1f5a4724
+		summarizeBy: none
+		sourceColumn: has_geolocation_coordinates
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Sellers = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("127.0.0.1:5433", "olist_analytics"),
+				    warehouse_marts_dim_sellers = Source{[Schema="warehouse_marts",Item="dim_sellers"]}[Data]
+				in
+				    warehouse_marts_dim_sellers
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

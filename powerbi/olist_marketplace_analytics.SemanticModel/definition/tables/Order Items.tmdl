@@ -1,0 +1,155 @@
+table 'Order Items'
+	lineageTag: 5e9b1ad0-907a-41d4-8431-1c13dcdc0e7f
+
+	column order_id
+		dataType: string
+		lineageTag: 522dca27-b724-418c-86e9-bcef722a7608
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_item_id
+		dataType: int64
+		formatString: 0
+		lineageTag: db65015a-b476-4c9b-a0a2-e23700fbec35
+		summarizeBy: sum
+		sourceColumn: order_item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		isHidden
+		lineageTag: b68c624a-7f12-45fd-ba93-32ae3befda1f
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: string
+		isHidden
+		lineageTag: 9a887e9e-ba03-4734-a3a1-64a2a1acd679
+		summarizeBy: none
+		sourceColumn: product_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_id
+		dataType: string
+		isHidden
+		lineageTag: a372ffa0-539b-4795-81d3-c271f27c715d
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_purchase_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d7b186af-a53e-4436-a289-5bafa99cabea
+		summarizeBy: none
+		sourceColumn: order_purchase_date_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipping_limit_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: de8abe92-aa7c-4d42-9c53-fc73a7438547
+		summarizeBy: sum
+		sourceColumn: shipping_limit_date_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_status
+		dataType: string
+		lineageTag: e5982410-797e-4f08-a397-94c6d71cff3f
+		summarizeBy: none
+		sourceColumn: order_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_purchase_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c41f3448-a221-4102-800e-e58ed5755af1
+		summarizeBy: none
+		sourceColumn: order_purchase_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipping_limit_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: be91cbff-684a-4843-b461-ef5bd8e41581
+		summarizeBy: none
+		sourceColumn: shipping_limit_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column item_quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: bad0bf34-48a1-4ca1-96aa-02a667c0730b
+		summarizeBy: sum
+		sourceColumn: item_quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column item_price
+		dataType: double
+		lineageTag: 474a21f6-4acb-4fa9-b2a8-0451dc9f3509
+		summarizeBy: sum
+		sourceColumn: item_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column freight_value
+		dataType: double
+		lineageTag: 5ed9f2fb-dfcb-4e4f-9fa4-a7754a239f05
+		summarizeBy: sum
+		sourceColumn: freight_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column item_and_freight_value
+		dataType: double
+		lineageTag: 2ffe36dc-d825-419f-bd22-c8d1d0236324
+		summarizeBy: sum
+		sourceColumn: item_and_freight_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'Order Items' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("127.0.0.1:5433", "olist_analytics"),
+				    warehouse_marts_fct_order_items = Source{[Schema="warehouse_marts",Item="fct_order_items"]}[Data]
+				in
+				    warehouse_marts_fct_order_items
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
