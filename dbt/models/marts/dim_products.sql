@@ -13,14 +13,16 @@ SELECT
     products.product_category_name
         AS product_category_name_portuguese,
     category_translations.product_category_name_english,
-    REPLACE(
-        COALESCE(
-            category_translations.product_category_name_english,
-            products.product_category_name,
-            'unknown'
-        ),
-        '_',
-        ' '
+    INITCAP(
+        REPLACE(
+            COALESCE(
+                category_translations.product_category_name_english,
+                products.product_category_name,
+                'unknown'
+            ),
+            '_',
+            ' '
+        )
     ) AS product_category_name,
     products.product_category_name IS NOT NULL
         AS has_product_category,
