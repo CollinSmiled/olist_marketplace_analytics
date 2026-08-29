@@ -410,6 +410,38 @@ table Orders
 
 		annotation SummarizationSetBy = Automatic
 
+	column delivery_delay_calendar_days
+		dataType: int64
+		formatString: 0
+		lineageTag: 7108c7f0-4a3e-4b27-b582-9a5ebefc34c4
+		summarizeBy: none
+		sourceColumn: delivery_delay_calendar_days
+
+		annotation SummarizationSetBy = User
+
+	column delivery_delay_band
+		dataType: string
+		lineageTag: dc6404c8-34cf-4bad-b64d-a6a69ede11ed
+		summarizeBy: none
+		sourceColumn: delivery_delay_band
+		sortByColumn: delivery_delay_band_sort
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_delay_band_sort
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: fa18c81f-0bb0-4412-9f77-7bee502893d0
+		summarizeBy: sum
+		sourceColumn: delivery_delay_band_sort
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Orders = m
 		mode: import
 		source =

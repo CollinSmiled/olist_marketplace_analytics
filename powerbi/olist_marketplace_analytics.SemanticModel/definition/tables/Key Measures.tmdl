@@ -287,6 +287,16 @@ table 'Key Measures'
 		displayFolder: Marketplace
 		lineageTag: 94031a25-d504-435d-ba6b-f7fdfb225dd1
 
+	measure 'Average Late Days' =
+			
+			CALCULATE(
+			    AVERAGE(Orders[delivery_delay_calendar_days]),
+			    Orders[is_delivered_late] = TRUE()
+			)
+		formatString: 0.0
+		displayFolder: Delivery
+		lineageTag: 1f3c8d22-3ce7-446a-8d8b-0fdb79731dfc
+
 	column Placeholder
 		dataType: int64
 		isHidden

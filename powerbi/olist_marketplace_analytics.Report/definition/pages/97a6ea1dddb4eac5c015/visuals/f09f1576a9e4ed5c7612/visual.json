@@ -5,7 +5,7 @@
     "x": 224,
     "y": 32,
     "z": 5000,
-    "height": 88,
+    "height": 96.000000000000014,
     "width": 320,
     "tabOrder": 5000
   },
@@ -176,7 +176,14 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Delivery performance and customer satisfaction'"
+                  "Value": "'Fulfillment reliability and customer feedback by purchase cohort'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }

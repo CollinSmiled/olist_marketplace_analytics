@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
-  "name": "d71822b4a9b64b17dc52",
+  "name": "b5cc75e77c5a048d2bd5",
   "position": {
-    "x": 768.00000000000011,
-    "y": 256,
-    "z": 8000,
-    "height": 304,
-    "width": 496,
-    "tabOrder": 8000
+    "x": 224,
+    "y": 496,
+    "z": 6002,
+    "height": 208,
+    "width": 528,
+    "tabOrder": 6002
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -20,15 +20,75 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Sellers"
+                      "Entity": "Customers"
                     }
                   },
-                  "Property": "seller_state"
+                  "Property": "customer_state"
                 }
               },
-              "queryRef": "Sellers.seller_state",
-              "nativeQueryRef": "seller_state",
+              "queryRef": "Customers.customer_state",
+              "nativeQueryRef": "customer_state",
               "active": true
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Key Measures"
+                    }
+                  },
+                  "Property": "Delivered Orders With Timing"
+                }
+              },
+              "queryRef": "Key Measures.Delivered Orders With Timing",
+              "nativeQueryRef": "Delivered Orders With Timing"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Key Measures"
+                    }
+                  },
+                  "Property": "On-Time Delivery Rate"
+                }
+              },
+              "queryRef": "Key Measures.On-Time Delivery Rate",
+              "nativeQueryRef": "On-Time Delivery Rate"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Key Measures"
+                    }
+                  },
+                  "Property": "Average Late Days"
+                }
+              },
+              "queryRef": "Key Measures.Average Late Days",
+              "nativeQueryRef": "Average Late Days"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Key Measures"
+                    }
+                  },
+                  "Property": "Average Review Score"
+                }
+              },
+              "queryRef": "Key Measures.Average Review Score",
+              "nativeQueryRef": "Average Review Score"
             }
           ]
         },
@@ -42,11 +102,11 @@
                       "Entity": "Key Measures"
                     }
                   },
-                  "Property": "Delivered GMV"
+                  "Property": "Late Delivered Orders"
                 }
               },
-              "queryRef": "Key Measures.Delivered GMV",
-              "nativeQueryRef": "Delivered GMV"
+              "queryRef": "Key Measures.Late Delivered Orders",
+              "nativeQueryRef": "Late Delivered Orders"
             }
           ]
         }
@@ -61,7 +121,7 @@
                     "Entity": "Key Measures"
                   }
                 },
-                "Property": "Delivered GMV"
+                "Property": "Late Delivered Orders"
               }
             },
             "direction": "Descending"
@@ -71,13 +131,13 @@
       }
     },
     "objects": {
-      "valueAxis": [
+      "labels": [
         {
           "properties": {
-            "showAxisTitle": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
@@ -96,16 +156,36 @@
             }
           }
         }
+      ],
+      "valueAxis": [
+        {
+          "properties": {
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "titleFontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "visualContainerObjects": {
       "title": [
         {
           "properties": {
-            "underline": {
+            "text": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "'Top 5 States by Late Deliveries'"
                 }
               }
             },
@@ -113,13 +193,6 @@
               "expr": {
                 "Literal": {
                   "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Top 10 Seller States by Delivered GMV'"
                 }
               }
             }
@@ -182,15 +255,15 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "ce77760041841b6b17a0",
+        "name": "5dcbdea550d75ecf3c05",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "Sellers"
+                "Entity": "Customers"
               }
             },
-            "Property": "seller_state"
+            "Property": "customer_state"
           }
         },
         "type": "TopN",
@@ -205,8 +278,8 @@
                     "Version": 2,
                     "From": [
                       {
-                        "Name": "s",
-                        "Entity": "Sellers",
+                        "Name": "c",
+                        "Entity": "Customers",
                         "Type": 0
                       },
                       {
@@ -220,10 +293,10 @@
                         "Column": {
                           "Expression": {
                             "SourceRef": {
-                              "Source": "s"
+                              "Source": "c"
                             }
                           },
-                          "Property": "seller_state"
+                          "Property": "customer_state"
                         },
                         "Name": "field"
                       }
@@ -238,20 +311,20 @@
                                 "Source": "k"
                               }
                             },
-                            "Property": "Delivered GMV"
+                            "Property": "Late Delivered Orders"
                           }
                         }
                       }
                     ],
-                    "Top": 10
+                    "Top": 5
                   }
                 }
               },
               "Type": 2
             },
             {
-              "Name": "s",
-              "Entity": "Sellers",
+              "Name": "c",
+              "Entity": "Customers",
               "Type": 0
             }
           ],
@@ -264,10 +337,10 @@
                       "Column": {
                         "Expression": {
                           "SourceRef": {
-                            "Source": "s"
+                            "Source": "c"
                           }
                         },
-                        "Property": "seller_state"
+                        "Property": "customer_state"
                       }
                     }
                   ],
@@ -281,6 +354,76 @@
             }
           ]
         }
+      },
+      {
+        "name": "adfc0eac558c5ed9a61b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Key Measures"
+              }
+            },
+            "Property": "Late Delivered Orders"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "45771d4b6ae78a158f49",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Key Measures"
+              }
+            },
+            "Property": "Delivered Orders With Timing"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "f89545f19085fad802cf",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Key Measures"
+              }
+            },
+            "Property": "On-Time Delivery Rate"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "fe762acb655e4daef0e4",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Key Measures"
+              }
+            },
+            "Property": "Average Late Days"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "3d1fcaa0de0f34d55a80",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Key Measures"
+              }
+            },
+            "Property": "Average Review Score"
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }

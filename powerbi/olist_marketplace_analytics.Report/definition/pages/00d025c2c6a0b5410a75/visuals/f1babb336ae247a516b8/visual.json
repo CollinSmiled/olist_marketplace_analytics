@@ -241,37 +241,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "bbce93c7cd2d8f27036f",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Key Measures"
-              }
-            },
-            "Property": "Delivered GMV"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "bdbfb4b38e5972149ab0",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Key Measures"
-              }
-            },
-            "Property": "Delivered Freight Value"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }
