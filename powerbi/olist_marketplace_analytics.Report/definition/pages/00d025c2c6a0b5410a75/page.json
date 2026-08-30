@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/1.4.0/schema.json",
+  "name": "00d025c2c6a0b5410a75",
+  "displayName": "Sales & Marketplace",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}

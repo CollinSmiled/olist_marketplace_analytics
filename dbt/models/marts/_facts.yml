@@ -184,9 +184,33 @@ models:
         description: Days from purchase to customer delivery.
 
       - name: delivery_delay_days
-        description: >
-          Days between actual and estimated delivery. Positive means late and
-          negative means early.
+        description: Exact elapsed days between the estimated-delivery midnight timestamp and actual delivery timestamp.
+
+      - name: delivery_delay_calendar_days
+        description: Calendar-date difference between actual and estimated delivery. Positive means late, zero means delivered on the promised date, and negative means early. Null when lateness cannot be evaluated.
+
+      - name: delivery_delay_band
+        description: Business-friendly grouping of calendar delivery delay.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - "On time or early"
+                  - "1-3 days late"
+                  - "4-7 days late"
+                  - "8+ days late"
+
+      - name: delivery_delay_band_sort
+        description: Numeric display order for delivery-delay bands.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                quote: false
 
       - name: has_delivery_timeline_anomaly
         description: Whether delivery timestamps contain an invalid sequence.

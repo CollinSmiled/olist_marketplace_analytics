@@ -1,0 +1,187 @@
+table Date
+	lineageTag: b1e14ddf-c848-48c8-b2e4-b8ea1ea9893d
+	dataCategory: Time
+
+	column date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 69fd1e88-1e79-40b6-a020-b11d7481054a
+		summarizeBy: none
+		sourceColumn: date_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_day
+		dataType: dateTime
+		isKey
+		formatString: Long Date
+		lineageTag: 650270f3-296d-49f0-b2a4-71a6422145e5
+		summarizeBy: none
+		sourceColumn: date_day
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year_number
+		dataType: int64
+		formatString: 0
+		lineageTag: badf9d33-aa8b-4812-b09a-912ebed97f80
+		summarizeBy: sum
+		sourceColumn: year_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter_number
+		dataType: int64
+		formatString: 0
+		lineageTag: fd2011fd-2644-4d5d-9ca0-d54d24613bac
+		summarizeBy: sum
+		sourceColumn: quarter_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter_name
+		dataType: string
+		lineageTag: 42ad4691-a18d-40e3-8589-bb13fbc3321c
+		summarizeBy: none
+		sourceColumn: quarter_name
+		sortByColumn: quarter_number
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_number
+		dataType: int64
+		formatString: 0
+		lineageTag: ba8760be-9e3a-4b15-a941-8c866a220fd4
+		summarizeBy: sum
+		sourceColumn: month_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_name
+		dataType: string
+		lineageTag: 49aa39d4-5edc-4984-ada4-944e5f5078b4
+		summarizeBy: none
+		sourceColumn: month_name
+		sortByColumn: month_number
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_short_name
+		dataType: string
+		lineageTag: 0f27417b-a2dc-4249-8ac2-38bc529508e8
+		summarizeBy: none
+		sourceColumn: month_short_name
+		sortByColumn: month_number
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_month
+		dataType: string
+		lineageTag: 03351c18-711c-4d96-9337-f87ad38c7158
+		summarizeBy: none
+		sourceColumn: year_month
+		sortByColumn: month_start_date
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_start_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8810fbd9-dadc-4b8a-a0c9-9459a438504a
+		summarizeBy: none
+		sourceColumn: month_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column iso_year_number
+		dataType: int64
+		formatString: 0
+		lineageTag: 5cdd6b64-f4cd-4912-a874-69b7390bd336
+		summarizeBy: sum
+		sourceColumn: iso_year_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column week_of_year
+		dataType: int64
+		formatString: 0
+		lineageTag: 4211d47c-1c66-494a-bc8c-ea5e2ec1ec33
+		summarizeBy: sum
+		sourceColumn: week_of_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_week
+		dataType: string
+		lineageTag: c873a76b-a13e-4749-9d3f-b7a597cefee1
+		summarizeBy: none
+		sourceColumn: year_week
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_of_month
+		dataType: int64
+		formatString: 0
+		lineageTag: cf959909-6c15-44c1-a34a-0020ef1b05d5
+		summarizeBy: sum
+		sourceColumn: day_of_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_of_week
+		dataType: int64
+		formatString: 0
+		lineageTag: 5d7703e5-d54e-495f-b01a-52b8aa73b629
+		summarizeBy: sum
+		sourceColumn: day_of_week
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_name
+		dataType: string
+		lineageTag: bf9f373e-bce5-416d-9749-4f210d8fe5a2
+		summarizeBy: none
+		sourceColumn: day_name
+		sortByColumn: day_of_week
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_weekend
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 4fc5b8b4-ee40-437b-b149-ed055006e0f7
+		summarizeBy: none
+		sourceColumn: is_weekend
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("127.0.0.1:5433", "olist_analytics"),
+				    warehouse_marts_dim_date = Source{[Schema="warehouse_marts",Item="dim_date"]}[Data]
+				in
+				    warehouse_marts_dim_date
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

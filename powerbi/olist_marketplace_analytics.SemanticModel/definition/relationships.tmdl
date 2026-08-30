@@ -1,0 +1,49 @@
+relationship AutoDetected_a7faeaa9-5c47-465c-99ce-2e41ac6e0204
+	fromColumn: 'Order Items'.customer_id
+	toColumn: Customers.customer_id
+
+relationship AutoDetected_5c9afa51-e093-4a30-9c22-556863e01c7e
+	fromColumn: 'Order Items'.product_id
+	toColumn: Products.product_id
+
+relationship AutoDetected_68ad96a1-b593-4f46-b351-fa9292a94e41
+	fromColumn: 'Order Items'.seller_id
+	toColumn: Sellers.seller_id
+
+relationship e4fdcd7a-916d-cb02-ad0e-60a0cc665e3f
+	fromColumn: Orders.order_purchase_date_key
+	toColumn: Date.date_key
+
+relationship 64f5f1dd-28bb-d6d1-991b-45bc2344ddbd
+	isActive: false
+	fromColumn: Orders.order_approved_date_key
+	toColumn: Date.date_key
+
+relationship a7b94afa-b3a7-1323-c2c4-a7b319f7c9e0
+	isActive: false
+	fromColumn: Orders.order_delivered_carrier_date_key
+	toColumn: Date.date_key
+
+relationship 2e4790c5-e14a-3838-fd0e-b1aa7ea3f56f
+	isActive: false
+	fromColumn: Orders.order_delivered_customer_date_key
+	toColumn: Date.date_key
+
+relationship 2f3cea1e-2e91-faa8-61d8-d6edae7cbca2
+	isActive: false
+	fromColumn: Orders.order_estimated_delivery_date_key
+	toColumn: Date.date_key
+
+relationship d65df128-851e-01a7-0054-5f0c9109031b
+	fromColumn: Orders.customer_id
+	toColumn: Customers.customer_id
+
+relationship 4154a503-0041-2d8d-5699-d1845a34e000
+	fromColumn: 'Order Items'.order_purchase_date_key
+	toColumn: Date.date_key
+
+relationship ccfbb13c-535c-bc23-6ea6-da44a73330ea
+	isActive: false
+	fromColumn: 'Order Items'.shipping_limit_date_key
+	toColumn: Date.date_key
+

@@ -1,0 +1,360 @@
+table 'Key Measures'
+	lineageTag: a86cae87-3766-4156-8adb-8ed179f02615
+
+	measure 'Total Orders' = COUNTROWS(Orders)
+		formatString: #,0
+		displayFolder: Orders
+		lineageTag: b0fafd17-46b2-4190-a900-b68be96f77ef
+
+	measure 'Orders With Items' = DISTINCTCOUNT('Order Items'[order_id])
+		formatString: #,0
+		displayFolder: Orders
+		lineageTag: d6577e27-aeab-4e75-85b5-9b730eaab1ad
+
+	measure 'Delivered Orders' =
+			
+			CALCULATE(
+			    [Total Orders],
+			    Orders[order_status] = "delivered"
+			)
+		formatString: #,0
+		displayFolder: Orders
+		lineageTag: 151f81d1-03bf-4fb9-96cb-be212731e5d4
+
+	measure 'Delivered Orders With Items' =
+			
+			CALCULATE(
+			    [Orders With Items],
+			    'Order Items'[order_status] = "delivered"
+			)
+		formatString: #,0
+		displayFolder: Orders
+		lineageTag: 6e0ad9a2-901d-4557-a59c-3cb24ae13a11
+
+	measure 'Delivered Order Rate' =
+			
+			DIVIDE(
+			    [Delivered Orders],
+			    [Total Orders]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Orders
+		lineageTag: ca1fa4d6-e768-4a73-bd8c-d901c7b42185
+
+	measure 'Delivered GMV' =
+			
+			CALCULATE(
+			    SUM('Order Items'[item_price]),
+			    'Order Items'[order_status] = "delivered"
+			)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Sales
+		lineageTag: d996dbc3-f210-49ee-8818-5573b1a94d5f
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Delivered Freight Value' =
+			
+			CALCULATE(
+			    SUM('Order Items'[freight_value]),
+			    'Order Items'[order_status] = "delivered"
+			)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Sales
+		lineageTag: c4168028-cb09-4ab4-b032-789ec9036d9c
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Delivered Order Value' =
+			
+			[Delivered GMV] + [Delivered Freight Value]
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Sales
+		lineageTag: 0eb23004-2f6f-42ec-9181-3897e40e4195
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Delivered Units' =
+			
+			CALCULATE(
+			    SUM('Order Items'[item_quantity]),
+			    'Order Items'[order_status] = "delivered"
+			)
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: 84c27b5d-cf46-45d5-a306-4e06dfc532ad
+
+	measure 'Average Order Value' =
+			
+			DIVIDE(
+			    [Delivered GMV],
+			    [Delivered Orders With Items]
+			)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Sales
+		lineageTag: d3f5db37-d620-4871-a136-aa988f67a3c2
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Delivered Orders With Timing' =
+			
+			CALCULATE(
+			    [Delivered Orders],
+			    NOT ISBLANK(Orders[delivery_delay_days])
+			)
+		formatString: #,0
+		displayFolder: Delivery
+		lineageTag: 3b2164b9-c197-4f01-9e98-9c3a5b87c265
+
+	measure 'Late Delivered Orders' =
+			
+			CALCULATE(
+			    [Delivered Orders With Timing],
+			    Orders[is_delivered_late] = TRUE()
+			)
+		formatString: #,0
+		displayFolder: Delivery
+		lineageTag: 8505524e-bf8e-4de2-a45a-381d19b5be27
+
+	measure 'On-Time Delivered Orders' =
+			
+			[Delivered Orders With Timing] - [Late Delivered Orders]
+		formatString: #,0
+		displayFolder: Delivery
+		lineageTag: e17b85f3-1a67-4dcc-995b-b414344cb18f
+
+	measure 'On-Time Delivery Rate' =
+			
+			DIVIDE(
+			    [On-Time Delivered Orders],
+			    [Delivered Orders With Timing]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Delivery
+		lineageTag: 77fae569-a514-449c-afb4-0b8fbb8036a5
+
+	measure 'Average Delivery Time (Days)' =
+			
+			CALCULATE(
+			    AVERAGE(Orders[delivery_time_days]),
+			    Orders[order_status] = "delivered"
+			)
+		formatString: 0.0
+		displayFolder: Delivery
+		lineageTag: 79a1cadb-368c-44e4-bb9b-4945cfc76be4
+
+	measure 'Reviewed Orders' =
+			
+			CALCULATE(
+			    [Total Orders],
+			    Orders[has_review] = TRUE()
+			)
+		formatString: #,0
+		displayFolder: Reviews
+		lineageTag: ed7e2c78-f152-4205-88b4-f52d14c5c5a1
+
+	measure 'Review Coverage Rate' =
+			
+			DIVIDE(
+			    [Reviewed Orders],
+			    [Total Orders]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Reviews
+		lineageTag: 1ac890a3-74c4-4683-aa78-9b85e13708a2
+
+	measure 'Average Review Score' =
+			
+			CALCULATE(
+			    AVERAGE(Orders[latest_review_score]),
+			    Orders[has_review] = TRUE()
+			)
+		formatString: 0.00
+		displayFolder: Reviews
+		lineageTag: 4d38bce1-e212-4f72-8a4d-98b4a40f630c
+
+	measure 'Positive Review Orders' =
+			
+			CALCULATE(
+			    [Reviewed Orders],
+			    Orders[latest_review_score] >= 4
+			)
+		formatString: #,0
+		displayFolder: Reviews
+		lineageTag: fe30a797-78a2-4e98-af35-8f5a687e2805
+
+	measure 'Positive Review Rate' =
+			
+			DIVIDE(
+			    [Positive Review Orders],
+			    [Reviewed Orders]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Reviews
+		lineageTag: d8ed5b9a-5573-4562-9843-67c94a29315a
+
+	measure 'Unique Customers' =
+			
+			COUNTROWS(
+			    SUMMARIZE(
+			        Orders,
+			        Customers[customer_unique_id]
+			    )
+			)
+		formatString: #,0
+		displayFolder: Customers
+		lineageTag: 7afaa58c-b6fb-4b6e-af5d-c8804f60d758
+
+	measure 'Repeat Customers' =
+			
+			VAR CustomerOrderCounts =
+			    ADDCOLUMNS(
+			        SUMMARIZE(
+			            Orders,
+			            Customers[customer_unique_id]
+			        ),
+			        "Order Count",
+			        CALCULATE([Total Orders])
+			    )
+			RETURN
+			    COUNTROWS(
+			        FILTER(
+			            CustomerOrderCounts,
+			            [Order Count] > 1
+			        )
+			    )
+		formatString: #,0
+		displayFolder: Customers
+		lineageTag: 34e495a7-6e0f-4299-8c0c-d4e8266cd92a
+
+	measure 'Repeat Customer Rate' =
+			
+			DIVIDE(
+			    [Repeat Customers],
+			    [Unique Customers]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Customers
+		lineageTag: 377dc03f-0e64-4425-991c-249c526292b6
+
+	measure 'Average Orders per Customer' =
+			
+			DIVIDE(
+			    [Total Orders],
+			    [Unique Customers]
+			)
+		formatString: 0.00
+		displayFolder: Customers
+		lineageTag: 9212a28c-dc24-49fe-9ed9-ca36fc56802c
+
+	measure 'Distinct Products Sold' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Order Items'[product_id]),
+			    'Order Items'[order_status] = "delivered"
+			)
+		formatString: #,0
+		displayFolder: Marketplace
+		lineageTag: 0cfc162e-54ef-4034-85da-491a7707859d
+
+	measure 'Active Sellers' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Order Items'[seller_id]),
+			    'Order Items'[order_status] = "delivered"
+			)
+		formatString: #,0
+		displayFolder: Marketplace
+		lineageTag: b3e0c353-7872-429e-b180-cd10c5860df1
+
+	measure 'Average Items per Order' =
+			
+			DIVIDE(
+			    [Delivered Units],
+			    [Delivered Orders With Items]
+			)
+		formatString: 0.00
+		displayFolder: Marketplace
+		lineageTag: c787c8e1-71b3-4076-b987-02a381756169
+
+	measure 'Freight Share of Order Value' =
+			
+			DIVIDE(
+			    [Delivered Freight Value],
+			    [Delivered Order Value]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Marketplace
+		lineageTag: 94031a25-d504-435d-ba6b-f7fdfb225dd1
+
+	measure 'Average Late Days' =
+			
+			CALCULATE(
+			    AVERAGE(Orders[delivery_delay_calendar_days]),
+			    Orders[is_delivered_late] = TRUE()
+			)
+		formatString: 0.0
+		displayFolder: Delivery
+		lineageTag: 1f3c8d22-3ce7-446a-8d8b-0fdb79731dfc
+
+	measure 'Active Customer Cities' =
+			
+			COUNTROWS(
+			    SUMMARIZE(
+			        Orders,
+			        Customers[customer_city]
+			    )
+			)
+		formatString: #,0
+		displayFolder: Customers
+		lineageTag: c4d6d3a2-12bb-416a-83e4-ba16e37301ec
+
+	measure 'Customer Concentration Color' =
+			
+			LOG(
+			    [Unique Customers] + 1
+			)
+		displayFolder: Customers
+		lineageTag: 16927730-7714-4287-9a99-f58b4cbd663b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Largest State Customer Share' =
+			
+			VAR LargestStateCustomers =
+			    MAXX(
+			        VALUES(Customers[customer_state]),
+			        CALCULATE([Unique Customers])
+			    )
+			RETURN
+			    DIVIDE(
+			        LargestStateCustomers,
+			        [Unique Customers]
+			    )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Customers
+		lineageTag: ec10fbc3-22db-4b48-98aa-48292a370431
+
+	column Placeholder
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: bdedbb1a-ec23-4cd5-aaf2-a4c3f68198dd
+		summarizeBy: sum
+		sourceColumn: Placeholder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Key Measures' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlSKjQUA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Placeholder = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Placeholder", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

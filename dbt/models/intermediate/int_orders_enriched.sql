@@ -63,8 +63,11 @@ SELECT
     CASE
         WHEN orders.order_status = 'delivered'
          AND orders.order_delivered_customer_at IS NOT NULL
-            THEN orders.order_delivered_customer_at
-                > orders.order_estimated_delivery_at
+            THEN CAST(
+                orders.order_delivered_customer_at AS DATE
+            ) > CAST(
+                orders.order_estimated_delivery_at AS DATE
+            )
     END AS is_delivered_late,
 
     CASE
@@ -92,6 +95,16 @@ SELECT
                 2
             )
     END AS delivery_delay_days,
+
+    CASE
+        WHEN orders.order_status = 'delivered'
+         AND orders.order_delivered_customer_at IS NOT NULL
+            THEN CAST(
+                orders.order_delivered_customer_at AS DATE
+            ) - CAST(
+                orders.order_estimated_delivery_at AS DATE
+            )
+    END AS delivery_delay_calendar_days,
 
     COALESCE(
         orders.order_delivered_carrier_at

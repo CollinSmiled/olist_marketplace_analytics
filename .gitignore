@@ -30,3 +30,7 @@ dbt/.user.yml
 .idea/
 .DS_Store
 Thumbs.db
+
+# Power BI local files
+**/.pbi/localSettings.json
+**/.pbi/cache.abf

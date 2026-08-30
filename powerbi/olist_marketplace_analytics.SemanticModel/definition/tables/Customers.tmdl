@@ -1,0 +1,99 @@
+table Customers
+	lineageTag: 6dffe83f-96aa-4b14-a639-720433ed5786
+
+	column customer_id
+		dataType: string
+		lineageTag: 1d821ff2-0de2-4cbd-a377-0e9dbd34bdda
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_unique_id
+		dataType: string
+		lineageTag: 419f20a6-f630-4219-a0f5-1ebc9c812fd0
+		summarizeBy: none
+		sourceColumn: customer_unique_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_zip_code_prefix
+		dataType: string
+		lineageTag: 9d862bc7-818e-4633-bd66-d6f57db78983
+		dataCategory: PostalCode
+		summarizeBy: none
+		sourceColumn: customer_zip_code_prefix
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_city
+		dataType: string
+		lineageTag: 4f098978-1d8e-4e3c-bbd7-a1d8f5db5931
+		dataCategory: City
+		summarizeBy: none
+		sourceColumn: customer_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_state
+		dataType: string
+		lineageTag: ff8f8b8e-4b57-494d-9786-050c1e50742f
+		dataCategory: StateOrProvince
+		summarizeBy: none
+		sourceColumn: customer_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_latitude
+		dataType: double
+		lineageTag: 711dcedd-b818-46e6-85bc-f3720c78714d
+		dataCategory: Latitude
+		summarizeBy: average
+		sourceColumn: customer_latitude
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column customer_longitude
+		dataType: double
+		lineageTag: f1430a7c-5999-423f-afe8-a134f72ef964
+		dataCategory: Longitude
+		summarizeBy: average
+		sourceColumn: customer_longitude
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column geolocation_observation_count
+		dataType: int64
+		formatString: 0
+		lineageTag: d8fa2e8d-058f-437f-bf52-904ffd64d93a
+		summarizeBy: sum
+		sourceColumn: geolocation_observation_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_geolocation_coordinates
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: e1c57bad-0779-4d10-b2c8-21d9e9b393bf
+		summarizeBy: none
+		sourceColumn: has_geolocation_coordinates
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Customers = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("127.0.0.1:5433", "olist_analytics"),
+				    warehouse_marts_dim_customers = Source{[Schema="warehouse_marts",Item="dim_customers"]}[Data]
+				in
+				    warehouse_marts_dim_customers
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

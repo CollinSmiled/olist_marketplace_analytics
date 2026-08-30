@@ -1,0 +1,138 @@
+table Products
+	lineageTag: a9634204-3414-42f9-8ed3-2a1bdc51456e
+
+	column product_id
+		dataType: string
+		lineageTag: eb790350-ed61-4d9d-93c2-9c24093251b6
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category_name_portuguese
+		dataType: string
+		lineageTag: 0d8fb136-195b-4fee-8781-d74d23a71fcb
+		summarizeBy: none
+		sourceColumn: product_category_name_portuguese
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category_name_english
+		dataType: string
+		lineageTag: 7c499f88-480d-4c29-8183-0d57bc347d9c
+		summarizeBy: none
+		sourceColumn: product_category_name_english
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category_name
+		dataType: string
+		lineageTag: d2de1d7e-fb41-4865-a27b-34e3c347deea
+		summarizeBy: none
+		sourceColumn: product_category_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_product_category
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 1ea27b97-0d33-424d-ab09-f0095e0246d8
+		summarizeBy: none
+		sourceColumn: has_product_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_english_category_translation
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 99654b56-09a7-4527-ad7b-34ee8872f09e
+		summarizeBy: none
+		sourceColumn: has_english_category_translation
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_name_length
+		dataType: int64
+		formatString: 0
+		lineageTag: 9a0f0329-ee81-4a35-a53a-3ae026d9046a
+		summarizeBy: none
+		sourceColumn: product_name_length
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_description_length
+		dataType: int64
+		formatString: 0
+		lineageTag: 6daf807b-2e6f-4a64-8b4b-ab392ff1d00b
+		summarizeBy: none
+		sourceColumn: product_description_length
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_photos_quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 94b3960e-b0cb-46f4-968d-60209a9ebf5b
+		summarizeBy: none
+		sourceColumn: product_photos_quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_weight_g
+		dataType: int64
+		formatString: 0
+		lineageTag: 28f40b0d-ed81-4f52-b9f2-f8968399bd02
+		summarizeBy: none
+		sourceColumn: product_weight_g
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_length_cm
+		dataType: int64
+		formatString: 0
+		lineageTag: f5456edf-a504-4870-9aed-2b23640c2b95
+		summarizeBy: none
+		sourceColumn: product_length_cm
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_height_cm
+		dataType: int64
+		formatString: 0
+		lineageTag: 080059c5-23c5-4c1d-86b9-75f9e0af7e16
+		summarizeBy: none
+		sourceColumn: product_height_cm
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_width_cm
+		dataType: int64
+		formatString: 0
+		lineageTag: 33bbc83a-58e0-4471-ba8d-8a8ea9642f06
+		summarizeBy: none
+		sourceColumn: product_width_cm
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_volume_cm3
+		dataType: int64
+		formatString: 0
+		lineageTag: 9770062e-1194-496d-8461-ddb8c2ec096d
+		summarizeBy: none
+		sourceColumn: product_volume_cm3
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Products = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("127.0.0.1:5433", "olist_analytics"),
+				    warehouse_marts_dim_products = Source{[Schema="warehouse_marts",Item="dim_products"]}[Data]
+				in
+				    warehouse_marts_dim_products
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
