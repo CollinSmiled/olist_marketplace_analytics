@@ -297,6 +297,44 @@ table 'Key Measures'
 		displayFolder: Delivery
 		lineageTag: 1f3c8d22-3ce7-446a-8d8b-0fdb79731dfc
 
+	measure 'Active Customer Cities' =
+			
+			COUNTROWS(
+			    SUMMARIZE(
+			        Orders,
+			        Customers[customer_city]
+			    )
+			)
+		formatString: #,0
+		displayFolder: Customers
+		lineageTag: c4d6d3a2-12bb-416a-83e4-ba16e37301ec
+
+	measure 'Customer Concentration Color' =
+			
+			LOG(
+			    [Unique Customers] + 1
+			)
+		displayFolder: Customers
+		lineageTag: 16927730-7714-4287-9a99-f58b4cbd663b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Largest State Customer Share' =
+			
+			VAR LargestStateCustomers =
+			    MAXX(
+			        VALUES(Customers[customer_state]),
+			        CALCULATE([Unique Customers])
+			    )
+			RETURN
+			    DIVIDE(
+			        LargestStateCustomers,
+			        [Unique Customers]
+			    )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Customers
+		lineageTag: ec10fbc3-22db-4b48-98aa-48292a370431
+
 	column Placeholder
 		dataType: int64
 		isHidden

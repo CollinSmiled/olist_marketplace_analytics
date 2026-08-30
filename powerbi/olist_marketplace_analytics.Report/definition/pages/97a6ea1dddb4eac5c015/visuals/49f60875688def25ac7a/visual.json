@@ -4,10 +4,10 @@
   "position": {
     "x": 767.99999999999989,
     "y": 496,
-    "z": 6003,
+    "z": 9000,
     "height": 208,
     "width": 496,
-    "tabOrder": 6003
+    "tabOrder": 9000
   },
   "visual": {
     "visualType": "clusteredColumnChart",
@@ -444,62 +444,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "2e220668c05fd4742920",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Key Measures"
-              }
-            },
-            "Property": "Positive Review Rate"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "66deb346353f286612e9",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Key Measures"
-              }
-            },
-            "Property": "Reviewed Orders"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "1482f24b033ec9ddff88",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Key Measures"
-              }
-            },
-            "Property": "Average Review Score"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "84aa142ab06163d95ffb",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Key Measures"
-              }
-            },
-            "Property": "Positive Review Orders"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
-  "name": "18feed9ceaeb7c3d96e0",
+  "name": "a8e6ca92aca31f4d3e21",
   "position": {
     "x": 224.00000000000003,
     "y": 144,
@@ -23,11 +23,11 @@
                       "Entity": "Key Measures"
                     }
                   },
-                  "Property": "On-Time Delivery Rate"
+                  "Property": "Unique Customers"
                 }
               },
-              "queryRef": "Key Measures.On-Time Delivery Rate",
-              "nativeQueryRef": "On-Time Delivery Rate"
+              "queryRef": "Key Measures.Unique Customers",
+              "nativeQueryRef": "Unique Customers"
             },
             {
               "field": {
@@ -37,11 +37,11 @@
                       "Entity": "Key Measures"
                     }
                   },
-                  "Property": "Late Delivered Orders"
+                  "Property": "Repeat Customers"
                 }
               },
-              "queryRef": "Key Measures.Late Delivered Orders",
-              "nativeQueryRef": "Late Delivered Orders"
+              "queryRef": "Key Measures.Repeat Customers",
+              "nativeQueryRef": "Repeat Customers"
             },
             {
               "field": {
@@ -51,12 +51,11 @@
                       "Entity": "Key Measures"
                     }
                   },
-                  "Property": "Average Delivery Time (Days)"
+                  "Property": "Repeat Customer Rate"
                 }
               },
-              "queryRef": "Key Measures.Average Delivery Time (Days)",
-              "nativeQueryRef": "Average Delivery Days",
-              "displayName": "Average Delivery Days"
+              "queryRef": "Key Measures.Repeat Customer Rate",
+              "nativeQueryRef": "Repeat Customer Rate"
             },
             {
               "field": {
@@ -66,11 +65,12 @@
                       "Entity": "Key Measures"
                     }
                   },
-                  "Property": "Average Late Days"
+                  "Property": "Average Orders per Customer"
                 }
               },
-              "queryRef": "Key Measures.Average Late Days",
-              "nativeQueryRef": "Average Late Days"
+              "queryRef": "Key Measures.Average Orders per Customer",
+              "nativeQueryRef": "Avg Orders/Customer",
+              "displayName": "Avg Orders/Customer"
             },
             {
               "field": {
@@ -80,11 +80,12 @@
                       "Entity": "Key Measures"
                     }
                   },
-                  "Property": "Average Review Score"
+                  "Property": "Largest State Customer Share"
                 }
               },
-              "queryRef": "Key Measures.Average Review Score",
-              "nativeQueryRef": "Average Review Score"
+              "queryRef": "Key Measures.Largest State Customer Share",
+              "nativeQueryRef": "Largest State Share",
+              "displayName": "Largest State Share"
             },
             {
               "field": {
@@ -94,11 +95,11 @@
                       "Entity": "Key Measures"
                     }
                   },
-                  "Property": "Positive Review Rate"
+                  "Property": "Active Customer Cities"
                 }
               },
-              "queryRef": "Key Measures.Positive Review Rate",
-              "nativeQueryRef": "Positive Review Rate"
+              "queryRef": "Key Measures.Active Customer Cities",
+              "nativeQueryRef": "Active Customer Cities"
             }
           ]
         }
@@ -113,7 +114,7 @@
                     "Entity": "Key Measures"
                   }
                 },
-                "Property": "On-Time Delivery Rate"
+                "Property": "Unique Customers"
               }
             },
             "direction": "Descending"
@@ -204,7 +205,49 @@
             }
           },
           "selector": {
-            "metadata": "Key Measures.Late Delivered Orders"
+            "metadata": "Key Measures.Unique Customers"
+          }
+        },
+        {
+          "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Key Measures.Repeat Customers"
+          }
+        },
+        {
+          "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Key Measures.Active Customer Cities"
+          }
+        },
+        {
+          "properties": {
+            "labelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "2L"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Key Measures.Largest State Customer Share"
           }
         }
       ],
@@ -263,5 +306,93 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "8f8c2ff35dc71fbf8d5e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Key Measures"
+              }
+            },
+            "Property": "Unique Customers"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "68a44811983e1aebcdaa",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Key Measures"
+              }
+            },
+            "Property": "Repeat Customers"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "e0c995c00a9a6d91b3be",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Key Measures"
+              }
+            },
+            "Property": "Repeat Customer Rate"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "92db4676d42cf202431d",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Key Measures"
+              }
+            },
+            "Property": "Average Orders per Customer"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "703b8329bcfb481d0c06",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Key Measures"
+              }
+            },
+            "Property": "Active Customer Cities"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "d2421ce4cbc89d5eff21",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Key Measures"
+              }
+            },
+            "Property": "Largest State Customer Share"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

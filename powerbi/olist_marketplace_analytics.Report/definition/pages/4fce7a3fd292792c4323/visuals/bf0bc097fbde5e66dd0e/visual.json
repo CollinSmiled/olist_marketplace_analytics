@@ -5,7 +5,7 @@
     "x": 224,
     "y": 32,
     "z": 5000,
-    "height": 96.000000000000014,
+    "height": 95.999999999999986,
     "width": 320,
     "tabOrder": 5000
   },
@@ -176,7 +176,14 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Customer behavior and geographic distribution'"
+                  "Value": "'Customer reach, repeat purchasing, and regional concentration'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }

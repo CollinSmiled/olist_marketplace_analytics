@@ -48,10 +48,10 @@ table Customers
 		dataType: double
 		lineageTag: 711dcedd-b818-46e6-85bc-f3720c78714d
 		dataCategory: Latitude
-		summarizeBy: sum
+		summarizeBy: average
 		sourceColumn: customer_latitude
 
-		annotation SummarizationSetBy = Automatic
+		annotation SummarizationSetBy = User
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
@@ -59,10 +59,10 @@ table Customers
 		dataType: double
 		lineageTag: f1430a7c-5999-423f-afe8-a134f72ef964
 		dataCategory: Longitude
-		summarizeBy: sum
+		summarizeBy: average
 		sourceColumn: customer_longitude
 
-		annotation SummarizationSetBy = Automatic
+		annotation SummarizationSetBy = User
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 

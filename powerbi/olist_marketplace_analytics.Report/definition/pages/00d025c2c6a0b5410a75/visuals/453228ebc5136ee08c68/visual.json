@@ -69,6 +69,13 @@
                   "Value": "'Between'"
                 }
               }
+            },
+            "startDate": {
+              "expr": {
+                "Literal": {
+                  "Value": "datetime'2016-09-04T00:00:00'"
+                }
+              }
             }
           }
         }
@@ -135,21 +142,45 @@
                 "Where": [
                   {
                     "Condition": {
-                      "Comparison": {
-                        "ComparisonKind": 3,
+                      "And": {
                         "Left": {
-                          "Column": {
-                            "Expression": {
-                              "SourceRef": {
-                                "Source": "d"
+                          "Comparison": {
+                            "ComparisonKind": 2,
+                            "Left": {
+                              "Column": {
+                                "Expression": {
+                                  "SourceRef": {
+                                    "Source": "d"
+                                  }
+                                },
+                                "Property": "date_day"
                               }
                             },
-                            "Property": "date_day"
+                            "Right": {
+                              "Literal": {
+                                "Value": "datetime'2016-09-04T00:00:00'"
+                              }
+                            }
                           }
                         },
                         "Right": {
-                          "Literal": {
-                            "Value": "datetime'2018-10-18T00:00:00'"
+                          "Comparison": {
+                            "ComparisonKind": 3,
+                            "Left": {
+                              "Column": {
+                                "Expression": {
+                                  "SourceRef": {
+                                    "Source": "d"
+                                  }
+                                },
+                                "Property": "date_day"
+                              }
+                            },
+                            "Right": {
+                              "Literal": {
+                                "Value": "datetime'2018-10-18T00:00:00'"
+                              }
+                            }
                           }
                         }
                       }

@@ -1,12 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
-  "name": "b5cc75e77c5a048d2bd5",
+  "name": "739701e5de1eeaac8b0d",
   "position": {
-    "x": 224,
-    "y": 496,
+    "x": 880,
+    "y": 256,
     "z": 8000,
     "height": 208,
-    "width": 528,
+    "width": 383.99999999999994,
     "tabOrder": 8000
   },
   "visual": {
@@ -27,8 +27,9 @@
                 }
               },
               "queryRef": "Customers.customer_state",
-              "nativeQueryRef": "customer_state",
-              "active": true
+              "nativeQueryRef": "Customer State (UF)",
+              "active": true,
+              "displayName": "Customer State (UF)"
             }
           ]
         },
@@ -42,11 +43,11 @@
                       "Entity": "Key Measures"
                     }
                   },
-                  "Property": "Delivered Orders With Timing"
+                  "Property": "Total Orders"
                 }
               },
-              "queryRef": "Key Measures.Delivered Orders With Timing",
-              "nativeQueryRef": "Delivered Orders With Timing"
+              "queryRef": "Key Measures.Total Orders",
+              "nativeQueryRef": "Total Orders"
             },
             {
               "field": {
@@ -56,11 +57,11 @@
                       "Entity": "Key Measures"
                     }
                   },
-                  "Property": "On-Time Delivery Rate"
+                  "Property": "Repeat Customers"
                 }
               },
-              "queryRef": "Key Measures.On-Time Delivery Rate",
-              "nativeQueryRef": "On-Time Delivery Rate"
+              "queryRef": "Key Measures.Repeat Customers",
+              "nativeQueryRef": "Repeat Customers"
             },
             {
               "field": {
@@ -70,11 +71,11 @@
                       "Entity": "Key Measures"
                     }
                   },
-                  "Property": "Average Late Days"
+                  "Property": "Repeat Customer Rate"
                 }
               },
-              "queryRef": "Key Measures.Average Late Days",
-              "nativeQueryRef": "Average Late Days"
+              "queryRef": "Key Measures.Repeat Customer Rate",
+              "nativeQueryRef": "Repeat Customer Rate"
             },
             {
               "field": {
@@ -84,11 +85,25 @@
                       "Entity": "Key Measures"
                     }
                   },
-                  "Property": "Average Review Score"
+                  "Property": "Average Orders per Customer"
                 }
               },
-              "queryRef": "Key Measures.Average Review Score",
-              "nativeQueryRef": "Average Review Score"
+              "queryRef": "Key Measures.Average Orders per Customer",
+              "nativeQueryRef": "Average Orders per Customer"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Key Measures"
+                    }
+                  },
+                  "Property": "Average Order Value"
+                }
+              },
+              "queryRef": "Key Measures.Average Order Value",
+              "nativeQueryRef": "Average Order Value"
             }
           ]
         },
@@ -102,11 +117,11 @@
                       "Entity": "Key Measures"
                     }
                   },
-                  "Property": "Late Delivered Orders"
+                  "Property": "Unique Customers"
                 }
               },
-              "queryRef": "Key Measures.Late Delivered Orders",
-              "nativeQueryRef": "Late Delivered Orders"
+              "queryRef": "Key Measures.Unique Customers",
+              "nativeQueryRef": "Unique Customers"
             }
           ]
         }
@@ -121,7 +136,7 @@
                     "Entity": "Key Measures"
                   }
                 },
-                "Property": "Late Delivered Orders"
+                "Property": "Unique Customers"
               }
             },
             "direction": "Descending"
@@ -144,29 +159,22 @@
           }
         }
       ],
-      "categoryAxis": [
+      "valueAxis": [
         {
           "properties": {
-            "showAxisTitle": {
+            "titleFontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
                 }
               }
             }
           }
         }
       ],
-      "valueAxis": [
+      "categoryAxis": [
         {
           "properties": {
-            "showAxisTitle": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "titleFontFamily": {
               "expr": {
                 "Literal": {
@@ -185,7 +193,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Top 5 States by Late Deliveries'"
+                  "Value": "'Top 5 States by Unique Customers'"
                 }
               }
             },
@@ -255,7 +263,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "5dcbdea550d75ecf3c05",
+        "name": "e0e4086803e09fe62c89",
         "field": {
           "Column": {
             "Expression": {
@@ -311,7 +319,7 @@
                                 "Source": "k"
                               }
                             },
-                            "Property": "Late Delivered Orders"
+                            "Property": "Unique Customers"
                           }
                         }
                       }

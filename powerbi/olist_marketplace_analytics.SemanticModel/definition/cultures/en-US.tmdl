@@ -748,6 +748,16 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.727
 			          }
+			        },
+			        {
+			          "Customer State (UF)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ],
 			      "SemanticType": "Location"
@@ -14116,6 +14126,16 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.514
 			          }
+			        },
+			        {
+			          "Avg Orders/Customer": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -14918,9 +14938,574 @@ cultureInfo en-US
 			          }
 			        }
 			      ]
+			    },
+			    "key_measure.active_customer_cities": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Key Measures",
+			          "ConceptualProperty": "Active Customer Cities"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "active customer cities": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "cities": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "customer cities": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "active client city": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.609
+			          }
+			        },
+			        {
+			          "active consumer city": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.609
+			          }
+			        },
+			        {
+			          "active user city": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.609
+			          }
+			        },
+			        {
+			          "active buyer city": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.609
+			          }
+			        },
+			        {
+			          "active patron city": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.609
+			          }
+			        },
+			        {
+			          "active purchaser city": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.609
+			          }
+			        },
+			        {
+			          "active shopper city": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.609
+			          }
+			        },
+			        {
+			          "client city": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.6
+			          }
+			        },
+			        {
+			          "consumer city": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.6
+			          }
+			        },
+			        {
+			          "user city": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.6
+			          }
+			        }
+			      ]
+			    },
+			    "key_measure.customer_concentration_color": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Key Measures",
+			          "ConceptualProperty": "Customer Concentration Color"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "customer concentration color": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "color": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "concentration color": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "client concentration color": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.609
+			          }
+			        },
+			        {
+			          "consumer concentration color": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.609
+			          }
+			        },
+			        {
+			          "user concentration color": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.609
+			          }
+			        },
+			        {
+			          "buyer concentration color": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.609
+			          }
+			        },
+			        {
+			          "patron concentration color": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.609
+			          }
+			        },
+			        {
+			          "purchaser concentration color": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.609
+			          }
+			        },
+			        {
+			          "shopper concentration color": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.609
+			          }
+			        },
+			        {
+			          "customer concentration hue": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.508
+			          }
+			        },
+			        {
+			          "concentration hue": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.5
+			          }
+			        },
+			        {
+			          "customer concentration tint": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.492
+			          }
+			        }
+			      ]
+			    },
+			    "key_measure.largest_state_customer_share": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Key Measures",
+			          "ConceptualProperty": "Largest State Customer Share"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "largest state customer share": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "share": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "customer share": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "state customer share": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "largest location customer share": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.617
+			          }
+			        },
+			        {
+			          "largest province customer share": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.617
+			          }
+			        },
+			        {
+			          "largest territory customer share": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.617
+			          }
+			        },
+			        {
+			          "largest nation customer share": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.617
+			          }
+			        },
+			        {
+			          "largest state client share": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.617
+			          }
+			        },
+			        {
+			          "largest state consumer share": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.617
+			          }
+			        },
+			        {
+			          "largest state user share": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.617
+			          }
+			        },
+			        {
+			          "largest state buyer share": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.617
+			          }
+			        },
+			        {
+			          "largest state patron share": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.617
+			          }
+			        },
+			        {
+			          "largest state purchaser share": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.617
+			          }
+			        },
+			        {
+			          "Largest State Share": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
 			    }
 			  },
 			  "Relationships": {
+			    "order_has_key_measure_average_late_days": {
+			      "Binding": {
+			        "ConceptualEntity": "Orders"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "order": {
+			          "Target": {
+			            "Entity": "order"
+			          }
+			        },
+			        "key_measure.average_late_days": {
+			          "Target": {
+			            "Entity": "key_measure.average_late_days"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "order"
+			            },
+			            "Object": {
+			              "Role": "key_measure.average_late_days"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "orders_have_average_late_days"
+			        }
+			      ]
+			    },
+			    "order_has_delivery_delay_band": {
+			      "Binding": {
+			        "ConceptualEntity": "Orders"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "order": {
+			          "Target": {
+			            "Entity": "order"
+			          }
+			        },
+			        "order.delivery_delay_band": {
+			          "Target": {
+			            "Entity": "order.delivery_delay_band"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "order"
+			            },
+			            "Object": {
+			              "Role": "order.delivery_delay_band"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "orders_have_delivery_delay_bands"
+			        }
+			      ]
+			    },
+			    "order_has_delivery_delay_calendar_day": {
+			      "Binding": {
+			        "ConceptualEntity": "Orders"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "order": {
+			          "Target": {
+			            "Entity": "order"
+			          }
+			        },
+			        "order.delivery_delay_calendar_day": {
+			          "Target": {
+			            "Entity": "order.delivery_delay_calendar_day"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "order"
+			            },
+			            "Object": {
+			              "Role": "order.delivery_delay_calendar_day"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "orders_have_delivery_delay_calendar_days"
+			        }
+			      ]
+			    },
+			    "order_item_has_key_measure_freight_share_of_order_value": {
+			      "Binding": {
+			        "ConceptualEntity": "Order Items"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "order_item": {
+			          "Target": {
+			            "Entity": "order_item"
+			          }
+			        },
+			        "key_measure.freight_share_of_order_value": {
+			          "Target": {
+			            "Entity": "key_measure.freight_share_of_order_value"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "order_item"
+			            },
+			            "Object": {
+			              "Role": "key_measure.freight_share_of_order_value"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "order_items_have_freight_share_of_order_value"
+			        }
+			      ]
+			    },
+			    "order_item_has_key_measure_average_items_per_order": {
+			      "Binding": {
+			        "ConceptualEntity": "Order Items"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "order_item": {
+			          "Target": {
+			            "Entity": "order_item"
+			          }
+			        },
+			        "key_measure.average_items_per_order": {
+			          "Target": {
+			            "Entity": "key_measure.average_items_per_order"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "order_item"
+			            },
+			            "Object": {
+			              "Role": "key_measure.average_items_per_order"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "order_items_have_average_items_per_order"
+			        }
+			      ]
+			    },
 			    "order_item_has_key_measure_active_sellers": {
 			      "Binding": {
 			        "ConceptualEntity": "Order Items"
@@ -19646,20 +20231,20 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "order_item_has_key_measure_average_items_per_order": {
+			    "key_measure_has_active_customer_states": {
 			      "Binding": {
-			        "ConceptualEntity": "Order Items"
+			        "ConceptualEntity": "Key Measures"
 			      },
 			      "State": "Generated",
 			      "Roles": {
-			        "order_item": {
+			        "key_measure": {
 			          "Target": {
-			            "Entity": "order_item"
+			            "Entity": "key_measure"
 			          }
 			        },
-			        "key_measure.average_items_per_order": {
+			        "key_measure.active_customer_states": {
 			          "Target": {
-			            "Entity": "key_measure.average_items_per_order"
+			            "Entity": "key_measure.active_customer_states"
 			          }
 			        }
 			      },
@@ -19667,32 +20252,32 @@ cultureInfo en-US
 			        {
 			          "Attribute": {
 			            "Subject": {
-			              "Role": "order_item"
+			              "Role": "key_measure"
 			            },
 			            "Object": {
-			              "Role": "key_measure.average_items_per_order"
+			              "Role": "key_measure.active_customer_states"
 			            }
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "order_items_have_average_items_per_order"
+			          "ID": "key_measures_have_active_customer_states"
 			        }
 			      ]
 			    },
-			    "order_item_has_key_measure_freight_share_of_order_value": {
+			    "key_measure_has_active_customer_cities": {
 			      "Binding": {
-			        "ConceptualEntity": "Order Items"
+			        "ConceptualEntity": "Key Measures"
 			      },
 			      "State": "Generated",
 			      "Roles": {
-			        "order_item": {
+			        "key_measure": {
 			          "Target": {
-			            "Entity": "order_item"
+			            "Entity": "key_measure"
 			          }
 			        },
-			        "key_measure.freight_share_of_order_value": {
+			        "key_measure.active_customer_cities": {
 			          "Target": {
-			            "Entity": "key_measure.freight_share_of_order_value"
+			            "Entity": "key_measure.active_customer_cities"
 			          }
 			        }
 			      },
@@ -19700,32 +20285,32 @@ cultureInfo en-US
 			        {
 			          "Attribute": {
 			            "Subject": {
-			              "Role": "order_item"
+			              "Role": "key_measure"
 			            },
 			            "Object": {
-			              "Role": "key_measure.freight_share_of_order_value"
+			              "Role": "key_measure.active_customer_cities"
 			            }
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "order_items_have_freight_share_of_order_value"
+			          "ID": "key_measures_have_active_customer_cities"
 			        }
 			      ]
 			    },
-			    "order_has_delivery_delay_calendar_day": {
+			    "key_measure_has_customer_concentration_color": {
 			      "Binding": {
-			        "ConceptualEntity": "Orders"
+			        "ConceptualEntity": "Key Measures"
 			      },
 			      "State": "Generated",
 			      "Roles": {
-			        "order": {
+			        "key_measure": {
 			          "Target": {
-			            "Entity": "order"
+			            "Entity": "key_measure"
 			          }
 			        },
-			        "order.delivery_delay_calendar_day": {
+			        "key_measure.customer_concentration_color": {
 			          "Target": {
-			            "Entity": "order.delivery_delay_calendar_day"
+			            "Entity": "key_measure.customer_concentration_color"
 			          }
 			        }
 			      },
@@ -19733,32 +20318,32 @@ cultureInfo en-US
 			        {
 			          "Attribute": {
 			            "Subject": {
-			              "Role": "order"
+			              "Role": "key_measure"
 			            },
 			            "Object": {
-			              "Role": "order.delivery_delay_calendar_day"
+			              "Role": "key_measure.customer_concentration_color"
 			            }
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "orders_have_delivery_delay_calendar_days"
+			          "ID": "key_measures_have_customer_concentration_color"
 			        }
 			      ]
 			    },
-			    "order_has_delivery_delay_band": {
+			    "key_measure_has_largest_state_customer_share": {
 			      "Binding": {
-			        "ConceptualEntity": "Orders"
+			        "ConceptualEntity": "Key Measures"
 			      },
 			      "State": "Generated",
 			      "Roles": {
-			        "order": {
+			        "key_measure": {
 			          "Target": {
-			            "Entity": "order"
+			            "Entity": "key_measure"
 			          }
 			        },
-			        "order.delivery_delay_band": {
+			        "key_measure.largest_state_customer_share": {
 			          "Target": {
-			            "Entity": "order.delivery_delay_band"
+			            "Entity": "key_measure.largest_state_customer_share"
 			          }
 			        }
 			      },
@@ -19766,48 +20351,15 @@ cultureInfo en-US
 			        {
 			          "Attribute": {
 			            "Subject": {
-			              "Role": "order"
+			              "Role": "key_measure"
 			            },
 			            "Object": {
-			              "Role": "order.delivery_delay_band"
+			              "Role": "key_measure.largest_state_customer_share"
 			            }
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "orders_have_delivery_delay_bands"
-			        }
-			      ]
-			    },
-			    "order_has_key_measure_average_late_days": {
-			      "Binding": {
-			        "ConceptualEntity": "Orders"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "order": {
-			          "Target": {
-			            "Entity": "order"
-			          }
-			        },
-			        "key_measure.average_late_days": {
-			          "Target": {
-			            "Entity": "key_measure.average_late_days"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "order"
-			            },
-			            "Object": {
-			              "Role": "key_measure.average_late_days"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "orders_have_average_late_days"
+			          "ID": "key_measures_have_largest_state_customer_share"
 			        }
 			      ]
 			    },

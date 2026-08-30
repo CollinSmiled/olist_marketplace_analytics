@@ -4,10 +4,10 @@
   "position": {
     "x": 224,
     "y": 256,
-    "z": 6001,
+    "z": 7000,
     "height": 224,
     "width": 1040,
-    "tabOrder": 6001
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "lineClusteredColumnComboChart",
@@ -242,93 +242,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "280e1767d8d27d17607b",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Date"
-              }
-            },
-            "Property": "month_start_date"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "6bb4721128595f7fd1e0",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Key Measures"
-              }
-            },
-            "Property": "Late Delivered Orders"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "f2d15e5b201613d1d4c9",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Key Measures"
-              }
-            },
-            "Property": "On-Time Delivery Rate"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "4a0f525866cbd8ba0fbc",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Key Measures"
-              }
-            },
-            "Property": "Delivered Orders With Timing"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "6594e8e62ae7b2040ed1",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Key Measures"
-              }
-            },
-            "Property": "Average Late Days"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "19066d38c1ee1bfdb21f",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Key Measures"
-              }
-            },
-            "Property": "Average Review Score"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }
