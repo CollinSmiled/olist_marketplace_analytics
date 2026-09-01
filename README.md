@@ -1,5 +1,7 @@
 # Olist Marketplace Analytics
 
+[![Project CI](https://github.com/CollinSmiled/olist_marketplace_analytics/actions/workflows/ci.yml/badge.svg)](https://github.com/CollinSmiled/olist_marketplace_analytics/actions/workflows/ci.yml)
+
 ## Project Overview
 
 An end-to-end analytics engineering project using the Brazilian E-Commerce Public Dataset by Olist. The project transforms raw marketplace data into a tested dimensional warehouse and interactive Power BI dashboard.
@@ -18,6 +20,7 @@ The project investigates why orders are delayed, which sellers are underperformi
 - Milestone 6: dimensional warehouse with four dimensions and two fact tables
 - Milestone 7: Power BI model and four-page analytics dashboard
 - Milestone 8: one-command local pipeline automation
+- Milestone 9: automated project validation with GitHub Actions
 
 ## Technology Stack
 
@@ -26,6 +29,7 @@ The project investigates why orders are delayed, which sellers are underperformi
 - SQL and dbt for transformations and testing
 - Power BI for dashboards
 - Docker for a reproducible local environment
+- GitHub Actions for continuous integration
 
 ## Running the Project
 
@@ -103,6 +107,16 @@ docker compose --profile tools run --rm dbt build
 The dbt project builds nine cleaned and typed staging views in `warehouse_staging`, five intermediate views in `warehouse_intermediate`, and six dimensional tables in `warehouse_marts`. The complete build contains 20 models and 209 data quality tests.
 
 A warning is logged for 13 products whose original Portuguese category names are missing from the translation table.
+
+## Continuous Integration
+
+GitHub Actions runs when a pull request targets `main` and after changes are pushed to `main`. It validates Python and PowerShell syntax, the Docker Compose configuration, Docker image builds, and dbt project parsing.
+
+The raw Olist files are not stored in GitHub, so complete ingestion and all 209 data tests are validated locally with:
+
+```powershell
+.\scripts\run_pipeline.ps1
+```
 
 ## Warehouse Design
 
