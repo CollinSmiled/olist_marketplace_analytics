@@ -8,7 +8,14 @@ An end-to-end analytics engineering project using the Brazilian E-Commerce Publi
 
 ## Business Problem
 
-The project investigates why orders are delayed, which sellers are underperforming, and how delivery performance is associated with customer satisfaction.
+The project evaluates marketplace sales, delivery reliability, customer satisfaction, repeat purchasing, and geographic concentration to identify operational and commercial priorities.
+
+## Key Findings
+
+- Delivered orders generated R$13.22 million in item GMV across 96,478 orders and 110,197 units. Freight added R$2.20 million, while average item GMV per delivered order was R$137.04.
+- Of 96,470 delivered orders with complete timing data, 93.23% arrived on or before the estimated date. The 6,534 late orders averaged 10.62 calendar days past the estimate.
+- Positive review rate declined from 82.66% for on-time or early deliveries to 53.19% for deliveries 1–3 days late, 22.48% for 4–7 days late, and 11.72% for 8 or more days late. This shows a strong association between delay severity and customer satisfaction.
+- Repeat purchasing was limited: 2,997 of 96,096 unique customers, or 3.12%, placed more than one order during the dataset period. São Paulo represented 40,302 unique customers, or 41.94%, indicating high geographic concentration.
 
 ## Current Status
 
@@ -36,7 +43,7 @@ The project investigates why orders are delayed, which sellers are underperformi
 ### Prerequisites
 
 - Docker Desktop
-- The nine Olist CSV files placed in `data/raw/`
+- The nine CSV files from the [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) placed in `data/raw/`
 
 ### Setup
 
