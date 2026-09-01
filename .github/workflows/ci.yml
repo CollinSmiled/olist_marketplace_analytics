@@ -1,0 +1,70 @@
+name: Project CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+env:
+  POSTGRES_HOST: postgres
+  POSTGRES_PORT: "5432"
+  POSTGRES_DB: olist_analytics
+  POSTGRES_USER: olist_app
+  POSTGRES_PASSWORD: ci_password
+  RAW_DATA_PATH: data/raw
+
+jobs:
+  validate:
+    name: Validate project
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Compile Python files
+        run: python -m compileall -q ingestion scripts
+
+      - name: Validate PowerShell runner
+        shell: pwsh
+        run: |
+          $parseErrors = $null
+
+          [System.Management.Automation.Language.Parser]::ParseFile(
+              (Resolve-Path "scripts/run_pipeline.ps1"),
+              [ref]$null,
+              [ref]$parseErrors
+          ) | Out-Null
+
+          if ($parseErrors.Count -gt 0) {
+              $parseErrors | Format-List
+              throw "PowerShell syntax validation failed."
+          }
+
+      - name: Validate Docker Compose configuration
+        run: docker compose config --quiet
+
+      - name: Build Docker images
+        run: docker compose --profile tools build ingestion dbt
+
+      - name: Parse dbt project
+        run: >
+          docker compose
+          --profile tools
+          run
+          --rm
+          --no-deps
+          dbt
+          parse
