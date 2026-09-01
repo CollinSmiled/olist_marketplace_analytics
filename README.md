@@ -17,6 +17,7 @@ The project investigates why orders are delayed, which sellers are underperformi
 - Milestone 5: reusable intermediate models and order-level processing
 - Milestone 6: dimensional warehouse with four dimensions and two fact tables
 - Milestone 7: Power BI model and four-page analytics dashboard
+- Milestone 8: one-command local pipeline automation
 
 ## Technology Stack
 
@@ -26,7 +27,7 @@ The project investigates why orders are delayed, which sellers are underperformi
 - Power BI for dashboards
 - Docker for a reproducible local environment
 
-## Running Raw Ingestion
+## Running the Project
 
 ### Prerequisites
 
@@ -40,6 +41,24 @@ Copy the environment template and add your PostgreSQL password:
 ```powershell
 Copy-Item .env.example .env
 ```
+
+### Complete Pipeline
+
+Run the complete local pipeline:
+
+```powershell
+.\scripts\run_pipeline.ps1
+```
+
+The runner validates the local setup, builds the Docker images, starts PostgreSQL, reloads the raw CSV files, builds the dbt warehouse, and runs all data quality tests. PostgreSQL remains running afterward so Power BI can connect to it.
+
+Stop the project when it is no longer needed:
+
+```powershell
+docker compose down
+```
+
+### Manual Raw Ingestion
 
 Build the ingestion image:
 
@@ -61,7 +80,7 @@ docker compose --profile tools run --rm ingestion
 
 The ingestion pipeline validates the source files, performs a transactional full refresh, and verifies the loaded row counts.
 
-## Running dbt
+## Running dbt Manually
 
 Build the dbt image:
 
