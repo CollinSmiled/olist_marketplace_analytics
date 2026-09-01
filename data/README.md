@@ -1,6 +1,6 @@
 # Dataset
 
-This project uses the Brazilian E-Commerce Public Dataset by Olist, obtained from Kaggle.
+This project uses the [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce), obtained from Kaggle. The dataset is published under the [CC BY-NC-SA 4.0 license](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 Raw CSV files must be extracted into `data/raw/`. They are excluded from Git because of their size and must be downloaded separately.
 
